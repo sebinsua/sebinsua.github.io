@@ -24,6 +24,16 @@
               </a>
             
               
+              <a class="source" href="helpers.html">
+                helpers.js
+              </a>
+            
+              
+              <a class="source" href="options-parser.html">
+                options-parser.js
+              </a>
+            
+              
               <a class="source" href="default-options.html">
                 default-options.js
               </a>
@@ -31,16 +41,6 @@
               
               <a class="source" href="event-collection.html">
                 event-collection.js
-              </a>
-            
-              
-              <a class="source" href="helpers.html">
-                helpers.js
-              </a>
-            
-              
-              <a class="source" href="identify.html">
-                identify.js
               </a>
             
               
@@ -54,8 +54,8 @@
               </a>
             
               
-              <a class="source" href="options-parser.html">
-                options-parser.js
+              <a class="source" href="identify.html">
+                identify.js
               </a>
             
               
@@ -103,15 +103,30 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-pi">"use strict"</span>;
 
-<span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./helpers'</span>);
+<span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../core/helpers'</span>);
 
-<span class="hljs-keyword">var</span> ResponseModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>
-
+<span class="hljs-keyword">var</span> ResponseModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> {</span>
+  <span class="hljs-keyword">this</span>._ee = helpers.setDefaultEvents(eventEmitter, []);
+  
   <span class="hljs-keyword">var</span> handlers = options.handlers,
       overrideParseResponseBody = !!(handlers &amp;&amp; handlers.parseResponseBody);
 
-  <span class="hljs-keyword">this</span>.parseResponseBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
-    <span class="hljs-keyword">if</span> (helpers.isArray(data)) { <span class="hljs-comment">// @todo: https://github.com/sebinsua/express-keenio/issues/7</span>
+  <span class="hljs-keyword">this</span>.parseResponseBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><a href="https://github.com/sebinsua/express-keenio/issues/7">@todo: express-keenio#issues/7</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (helpers.isArray(data)) {
       <span class="hljs-keyword">return</span> {};
     }
 
@@ -120,9 +135,22 @@
 
   <span class="hljs-keyword">this</span>._fallbackParseResponseBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(body)</span> {</span>
     <span class="hljs-keyword">return</span> body;
-  };
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>The internal method can be overridden in the options.handlers key-value object.</p>
 
-  <span class="hljs-keyword">this</span>._parseResponseBody = overrideParseResponseBody ? handlers.parseResponseBody
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>._parseResponseBody = overrideParseResponseBody ? handlers.parseResponseBody
                                                       : <span class="hljs-keyword">this</span>._fallbackParseResponseBody;
   
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;

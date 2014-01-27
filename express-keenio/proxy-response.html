@@ -24,6 +24,16 @@
               </a>
             
               
+              <a class="source" href="helpers.html">
+                helpers.js
+              </a>
+            
+              
+              <a class="source" href="options-parser.html">
+                options-parser.js
+              </a>
+            
+              
               <a class="source" href="default-options.html">
                 default-options.js
               </a>
@@ -31,16 +41,6 @@
               
               <a class="source" href="event-collection.html">
                 event-collection.js
-              </a>
-            
-              
-              <a class="source" href="helpers.html">
-                helpers.js
-              </a>
-            
-              
-              <a class="source" href="identify.html">
-                identify.js
               </a>
             
               
@@ -54,8 +54,8 @@
               </a>
             
               
-              <a class="source" href="options-parser.html">
-                options-parser.js
+              <a class="source" href="identify.html">
+                identify.js
               </a>
             
               
@@ -103,56 +103,133 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-pi">"use strict"</span>;
 
-<span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./helpers'</span>);
+<span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../core/helpers'</span>);
 
 <span class="hljs-keyword">var</span> ResponseModule = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./response'</span>);
 
-<span class="hljs-keyword">var</span> ProxyResponseModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>
-  
-  <span class="hljs-keyword">var</span> responseHandler = <span class="hljs-keyword">new</span> ResponseModule(options);
-  
-  <span class="hljs-keyword">var</span> getResponseData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(responseSendArguments)</span> {</span>
-    <span class="hljs-keyword">var</span> _getReaction = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(temp)</span> {</span>
-      <span class="hljs-keyword">var</span> reaction;
-      <span class="hljs-keyword">if</span> (helpers.isObject(temp)) {
-        reaction = temp;
-      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (helpers.isString(temp)) {
-        <span class="hljs-keyword">try</span> {
-          reaction = <span class="hljs-built_in">JSON</span>.parse(temp);
-        } <span class="hljs-keyword">catch</span> (e) {
-          reaction = temp;
-        }
-      } <span class="hljs-keyword">else</span> {
-        reaction = temp;
+<span class="hljs-keyword">var</span> ProxyResponseModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> {</span>
+  <span class="hljs-keyword">this</span>._ee = helpers.setDefaultEvents(eventEmitter, []);
+    
+  <span class="hljs-keyword">var</span> responseHandler = <span class="hljs-keyword">new</span> ResponseModule(options);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Data can be a string, a json string, or an object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> _getBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(temp)</span> {</span>
+    <span class="hljs-keyword">var</span> body;
+    <span class="hljs-keyword">if</span> (helpers.isObject(temp)) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>If an object was passed in, this is the body.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      body = temp;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (helpers.isString(temp)) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>If a string was passed in, we check to see whether it was json
+by parsing it and get this data out if possible. Otherwise it&#39;s a string.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">try</span> {
+        body = <span class="hljs-built_in">JSON</span>.parse(temp);
+      } <span class="hljs-keyword">catch</span> (e) {
+        body = temp;
       }
+    } <span class="hljs-keyword">else</span> {
+      body = temp;
+    }
 
-      <span class="hljs-keyword">return</span> reaction;
-    };
+    <span class="hljs-keyword">return</span> body;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>This is only for use by methods that follow the argument patterns:</p>
+<ul>
+<li>(status, data)</li>
+<li>(status)</li>
+<li>(data)</li>
+<li>(body, status) compatability</li>
+</ul>
 
-    <span class="hljs-keyword">var</span> temp,
-        reaction,
-        statusCode = <span class="hljs-number">200</span>,
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> _captureResponseData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(argumentsObj, resStatus)</span> {</span>
+    <span class="hljs-keyword">var</span> body, statusCode = resStatus || <span class="hljs-number">200</span>,
         data = {};
 
-    <span class="hljs-keyword">if</span> (responseSendArguments.length === <span class="hljs-number">2</span>) {
-      statusCode = responseSendArguments[<span class="hljs-number">0</span>];
-      temp = responseSendArguments[<span class="hljs-number">1</span>];
+    <span class="hljs-keyword">if</span> (argumentsObj.length === <span class="hljs-number">2</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>(body, status) backwards compatability mode, spoken of here:
+<a href="https://github.com/visionmedia/express/blob/master/lib/response.js#L91">express#backwards-compat</a></p>
 
-      reaction = _getReaction(temp);
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-string">'number'</span> != <span class="hljs-keyword">typeof</span> argumentsObj[<span class="hljs-number">0</span>] &amp;&amp; <span class="hljs-string">'number'</span> == <span class="hljs-keyword">typeof</span> argumentsObj[<span class="hljs-number">1</span>]) {
+        statusCode = argumentsObj[<span class="hljs-number">1</span>];
+        body = _getBody(argumentsObj[<span class="hljs-number">0</span>]);
+      } <span class="hljs-keyword">else</span> {
+        statusCode = argumentsObj[<span class="hljs-number">0</span>];
+        body = _getBody(argumentsObj[<span class="hljs-number">1</span>]);
+      }
 
-      data.reaction = reaction;
+      data.body = body;
       data.status = statusCode;
     } <span class="hljs-keyword">else</span> {
-      temp = responseSendArguments[<span class="hljs-number">0</span>];
+      <span class="hljs-keyword">if</span> (helpers.isNumber(argumentsObj[<span class="hljs-number">0</span>])) {
+        statusCode = argumentsObj[<span class="hljs-number">0</span>];
 
-      <span class="hljs-keyword">if</span> (helpers.isNumber(temp)) {
-        statusCode = temp;
-
+        data.body = statusCode;
         data.status = statusCode;
       } <span class="hljs-keyword">else</span> {
-        reaction = _getReaction(temp);
+        body = _getBody(argumentsObj[<span class="hljs-number">0</span>]);
 
-        data.reaction = reaction;
+        data.body = body;
         data.status = statusCode;
       }
     }
@@ -160,20 +237,267 @@
     <span class="hljs-keyword">return</span> data;
   };
 
-  <span class="hljs-keyword">this</span>.getResponseData = getResponseData;
+  <span class="hljs-keyword">var</span> _captureRenderData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(argumentsObj)</span> {</span>
+    <span class="hljs-keyword">var</span> body, data = {};
+    <span class="hljs-keyword">if</span> (argumentsObj.length &gt;= <span class="hljs-number">2</span> &amp;&amp; helpers.isObject(argumentsObj[<span class="hljs-number">1</span>])) {
+      data.body = helpers.extend({}, argumentsObj[<span class="hljs-number">1</span>]); <span class="hljs-comment">// We need a new object, otherwise we get a reference which later has _locals added to it...</span>
+    } <span class="hljs-keyword">else</span> {
+      data.body = {};
+    }
+
+    <span class="hljs-keyword">return</span> data;
+  };
+
+  <span class="hljs-keyword">this</span>.getResponseData = _captureResponseData;
+  <span class="hljs-keyword">this</span>.getRenderData = _captureRenderData;
 
   <span class="hljs-keyword">this</span>.proxyResponseObject = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(res)</span> {</span>
-    <span class="hljs-keyword">var</span> responseSend = res.send,
-        parsedResponseData = <span class="hljs-keyword">this</span>;
     
-    res.send = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">( <span class="hljs-comment">/* arguments */</span> )</span> {</span>
-      <span class="hljs-keyword">var</span> responseData = getResponseData(<span class="hljs-built_in">arguments</span>);
+    <span class="hljs-keyword">var</span> responseJsonSend  = res.json,
+        responseJsonpSend = res.jsonp,
+        responseSend      = res.send,
+        responseRedirect  = res.redirect,
+        responseRender    = res.render,
+        responseSendfile  = res.sendfile,
+        responseDownload  = res.download;
 
-      parsedResponseData.reaction = responseHandler.parseResponseBody(responseData.reaction);
+    <span class="hljs-keyword">var</span> parsedResponseData = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>A check that is used by res.send since parsing might already have been done by
+res.json or res.jsonp which call res.send themselves.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> hasNotBeenProxiedAlready = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(parsedResponseData)</span> {</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(parsedResponseData).length === <span class="hljs-number">0</span>;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>A proxied version of an express method which can handle the following
+arguments:</p>
+<ul>
+<li>(status, data)</li>
+<li>(status)</li>
+<li>(data)</li>
+<li>(body, status) compatability</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.json = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+      <span class="hljs-keyword">var</span> responseData = _captureResponseData(<span class="hljs-built_in">arguments</span>, res.statusCode || <span class="hljs-number">200</span>);
+      parsedResponseData.body = responseHandler.parseResponseBody(responseData.body);
       parsedResponseData.status = responseData.status;
 
+      responseJsonSend.apply(res, <span class="hljs-built_in">arguments</span>);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>A proxied version of an express method which can handle the following
+arguments:</p>
+<ul>
+<li>(status, data)</li>
+<li>(status)</li>
+<li>(data)</li>
+<li>(body, status) compatability</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.jsonp = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+      <span class="hljs-keyword">var</span> responseData = _captureResponseData(<span class="hljs-built_in">arguments</span>, res.statusCode || <span class="hljs-number">200</span>);
+      parsedResponseData.body = responseHandler.parseResponseBody(responseData.body);
+      parsedResponseData.status = responseData.status;
+
+      responseJsonpSend.apply(res, <span class="hljs-built_in">arguments</span>);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>A proxied version of an express method which can handle the following
+arguments:</p>
+<ul>
+<li>(status, data)</li>
+<li>(status)</li>
+<li>(data)</li>
+<li>(body, status) compatability</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.send = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>If .json or .jsonp call this with a string, an implementation-level detail which 
+is currently correct then we won&#39;t reparse the response again due to the next line.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (hasNotBeenProxiedAlready(parsedResponseData)) {
+        <span class="hljs-keyword">var</span> responseData = _captureResponseData(<span class="hljs-built_in">arguments</span>, res.statusCode || <span class="hljs-number">200</span>);
+        parsedResponseData.body = responseHandler.parseResponseBody(responseData.body);
+        parsedResponseData.status = responseData.status;
+      }
+
       responseSend.apply(res, <span class="hljs-built_in">arguments</span>);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>(url)
+(status, url)
+(url, status)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.redirect = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+      <span class="hljs-keyword">var</span> responseData = _captureResponseData(<span class="hljs-built_in">arguments</span>, res.statusCode || <span class="hljs-number">200</span>);
+      parsedResponseData.body = {
+        redirectTo: responseHandler.parseResponseBody(responseData.body)
+      };
+      parsedResponseData.status = responseData.status;
+
+      responseRedirect.apply(res, <span class="hljs-built_in">arguments</span>);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>(view)
+(view, options, function)
+(view, function)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.render = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+      <span class="hljs-keyword">var</span> responseData = _captureRenderData(<span class="hljs-built_in">arguments</span>);
+      parsedResponseData.body = responseData.body;
+      parsedResponseData.status = res.statusCode;
+
+      responseRender.apply(res, <span class="hljs-built_in">arguments</span>);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>(path)
+(path, options)
+(path, options, function)
+(path, function)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.sendfile = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>I don&#39;t need to know about the options or the fn. They&#39;re beyond the point.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      parsedResponseData.body = {
+        filePath: <span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>]
+      };
+      parsedResponseData.status = res.statusCode; <span class="hljs-comment">// @todo: if file does not exist, this lies...</span>
+
+      responseSendfile.apply(res, <span class="hljs-built_in">arguments</span>);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>(path)
+(path, filename)
+(path, filename, function)
+(path, function)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.download = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+      parsedResponseData.body = {
+        filePath: <span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>]
+      };
+      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>[<span class="hljs-number">1</span>] &amp;&amp; helpers.isString(<span class="hljs-built_in">arguments</span>[<span class="hljs-number">1</span>])) {
+        parsedResponseData.body.fileName = <span class="hljs-built_in">arguments</span>[<span class="hljs-number">1</span>];
+      }
+      parsedResponseData.status = res.statusCode;
+
+      responseDownload.apply(res, <span class="hljs-built_in">arguments</span>);
     };
+
+    <span class="hljs-keyword">return</span> parsedResponseData;
   };
 
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;

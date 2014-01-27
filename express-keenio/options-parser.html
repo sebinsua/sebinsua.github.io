@@ -24,6 +24,16 @@
               </a>
             
               
+              <a class="source" href="helpers.html">
+                helpers.js
+              </a>
+            
+              
+              <a class="source" href="options-parser.html">
+                options-parser.js
+              </a>
+            
+              
               <a class="source" href="default-options.html">
                 default-options.js
               </a>
@@ -31,16 +41,6 @@
               
               <a class="source" href="event-collection.html">
                 event-collection.js
-              </a>
-            
-              
-              <a class="source" href="helpers.html">
-                helpers.js
-              </a>
-            
-              
-              <a class="source" href="identify.html">
-                identify.js
               </a>
             
               
@@ -54,8 +54,8 @@
               </a>
             
               
-              <a class="source" href="options-parser.html">
-                options-parser.js
+              <a class="source" href="identify.html">
+                identify.js
               </a>
             
               
@@ -104,7 +104,7 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-pi">"use strict"</span>;
 
 <span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./helpers'</span>),
-    defaultOptions = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./default-options'</span>);
+    defaultOptions = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../default-options'</span>);
 
 <span class="hljs-keyword">var</span> OptionsParser = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
   <span class="hljs-keyword">this</span>._defaultOptions = defaultOptions || {};
@@ -113,6 +113,10 @@
 OptionsParser.prototype._validate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>
   <span class="hljs-keyword">if</span> (!options) {
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"No options specified for the keen.io middleware."</span>);
+  }
+
+  <span class="hljs-keyword">if</span> (!helpers.isObject(options)) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Configuration must be a valid object."</span>);
   }
 
   <span class="hljs-keyword">if</span> (!options.client) {
