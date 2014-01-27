@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>keen-event.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="default-options.html">
+                default-options.js
+              </a>
+            
+              
+              <a class="source" href="event-collection.html">
+                event-collection.js
+              </a>
+            
+              
+              <a class="source" href="keen-event.html">
+                keen-event.js
+              </a>
+            
+              
+              <a class="source" href="keenio-middleware.html">
+                keenio-middleware.js
+              </a>
+            
+              
+              <a class="source" href="routes.html">
+                routes.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>keen-event.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-pi">"use strict"</span>;
+
+<span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./core/helpers'</span>);
+
+<span class="hljs-keyword">var</span> KeenEventModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> {</span>
+  <span class="hljs-keyword">this</span>._ee = helpers.setDefaultEvents(eventEmitter, [<span class="hljs-string">'error'</span>, <span class="hljs-string">'debug'</span>]);
+
+  <span class="hljs-keyword">var</span> MAX_PROPERTY_HIERARCHY_DEPTH = <span class="hljs-number">10</span>,
+      MAX_STRING_LENGTH = <span class="hljs-number">1000</span>;
+
+  <span class="hljs-keyword">this</span>.generateEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(identity, parsedRequestData, parsedResponseData, routeConfig)</span> {</span>
+    <span class="hljs-keyword">var</span> keenEvent = {
+      identity: identity,
+      intention: {
+        method: parsedRequestData.method,
+        path: parsedRequestData.path,
+        params: parsedRequestData.params,
+        body: parsedRequestData.body,
+        query: parsedRequestData.query
+      },
+      reaction: parsedResponseData.body,
+      httpStatus: parsedResponseData.status,
+      environment: {
+        library: <span class="hljs-string">'express-keenio'</span>
+      }
+    };
+
+    <span class="hljs-keyword">if</span> (parsedRequestData.referer) {
+      keenEvent.intention.referer = parsedRequestData.referer;
+    }
+
+    <span class="hljs-keyword">if</span> (routeConfig.tag) {
+      keenEvent.tag = routeConfig.tag;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.sanitize(keenEvent);
+  };
+
+  <span class="hljs-keyword">this</span>.sanitize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+    <span class="hljs-keyword">this</span>._checkPropertyDepth(data, <span class="hljs-literal">false</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>@todo: For performance, we&#39;re going to create a way of passing in functions to
+ONE recursive function. This is just me being lazy to start with.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>._checkForArraysOfObjects(data);
+    <span class="hljs-keyword">this</span>._checkForExtremelyLongStrings(data);
+    <span class="hljs-keyword">this</span>._checkForFunctions(data);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._sanitizeData(data);
+  };
+
+  <span class="hljs-keyword">this</span>._checkPropertyDepth = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, smite, level)</span> {</span>
+    level = level || <span class="hljs-number">1</span>;
+    smite = smite || <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
+        depth = level;
+    
+    helpers.forEach(data, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value, key, data)</span> {</span>
+      <span class="hljs-keyword">if</span> (helpers.isEnumerable(value)) {
+        depth = self._checkPropertyDepth(value, smite, level + <span class="hljs-number">1</span>);
+      }
+
+      <span class="hljs-keyword">if</span> (level &gt; MAX_PROPERTY_HIERARCHY_DEPTH) {
+        <span class="hljs-keyword">var</span> isSmiteMessage = <span class="hljs-string">''</span>;
+        <span class="hljs-keyword">if</span> (smite) {
+          isSmiteMessage = <span class="hljs-string">'and has been smited.'</span>;
+          <span class="hljs-keyword">delete</span> data[key];
+        }
+        self._ee.emit(<span class="hljs-string">'error'</span>, <span class="hljs-string">'WARNING: The depth of the key ('</span> + key + <span class="hljs-string">') is greater than '</span> + MAX_PROPERTY_HIERARCHY_DEPTH + isSmiteMessage);
+      }
+
+      depth = <span class="hljs-built_in">Math</span>.max(depth, level);
+    });
+    <span class="hljs-keyword">return</span> depth;
+  };
+
+  <span class="hljs-keyword">this</span>._checkForArraysOfObjects = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>@todo: <a href="https://github.com/sebinsua/express-keenio/issues/7">https://github.com/sebinsua/express-keenio/issues/7</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+
+    <span class="hljs-keyword">if</span> (!helpers.isEnumerable(data)) {
+      <span class="hljs-keyword">return</span> data;
+    } <span class="hljs-keyword">else</span> {
+      helpers.forEach(data, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value, key)</span> {</span>
+        <span class="hljs-keyword">if</span> (helpers.isArrayOfObjects(value)) {
+          self._ee.emit(<span class="hljs-string">'debug'</span>, <span class="hljs-string">"WARNING: An array of objects was detected and SMITED from the event."</span>);
+          <span class="hljs-keyword">delete</span> data[key];
+        } <span class="hljs-keyword">else</span> {
+          data[key] = self._checkForArraysOfObjects(value);
+        }
+      });
+    }
+
+    <span class="hljs-keyword">return</span> data;
+  };
+
+  <span class="hljs-keyword">this</span>._checkForFunctions = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+
+    <span class="hljs-keyword">if</span> (!helpers.isEnumerable(data)) {
+      <span class="hljs-keyword">return</span> data;
+    } <span class="hljs-keyword">else</span> {
+      helpers.forEach(data, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value, key)</span> {</span>
+        <span class="hljs-keyword">if</span> (helpers.isFunction(value)) {
+          self._ee.emit(<span class="hljs-string">'error'</span>, <span class="hljs-string">"WARNING: The value found at property ("</span> + key + <span class="hljs-string">") is a function and has been smited."</span>);
+          <span class="hljs-keyword">delete</span> data[key];
+        } <span class="hljs-keyword">else</span> {
+          data[key] = self._checkForFunctions(value);
+        }
+      });
+    }
+
+    <span class="hljs-keyword">return</span> data;
+  };
+
+  <span class="hljs-keyword">this</span>._checkForExtremelyLongStrings = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+
+    <span class="hljs-keyword">if</span> (!helpers.isEnumerable(data)) {
+      <span class="hljs-keyword">return</span> data;
+    } <span class="hljs-keyword">else</span> {
+      helpers.forEach(data, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value, key)</span> {</span>
+        <span class="hljs-keyword">if</span> (helpers.isString(value) &amp;&amp; value.length &gt; MAX_STRING_LENGTH) {
+          self._ee.emit(<span class="hljs-string">'error'</span>, <span class="hljs-string">"WARNING: The string found at property ("</span> + key + <span class="hljs-string">") is huge and has been smited."</span>);
+          <span class="hljs-keyword">delete</span> data[key];
+        } <span class="hljs-keyword">else</span> {
+          data[key] = self._checkForExtremelyLongStrings(value);
+        }
+      });
+    }
+
+    <span class="hljs-keyword">return</span> data;
+  };
+
+  <span class="hljs-keyword">this</span>._sanitizeData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+
+    <span class="hljs-keyword">var</span> PROPERTY_BLACKLIST = [<span class="hljs-string">'password'</span>].concat(options &amp;&amp; options.blacklistProperties || []),
+        SMITE = <span class="hljs-string">"[redacted]"</span>;
+    <span class="hljs-keyword">if</span> (!helpers.isEnumerable(data)) {
+      <span class="hljs-keyword">return</span> data;
+    } <span class="hljs-keyword">else</span> {
+      helpers.forEach(data, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value, key)</span> {</span>
+        <span class="hljs-keyword">if</span> (PROPERTY_BLACKLIST.indexOf(key) !== -<span class="hljs-number">1</span>) {
+          self._ee.emit(<span class="hljs-string">'debug'</span>, <span class="hljs-string">"WARNING: The property ("</span> + key + <span class="hljs-string">") is blacklisted and has been redacted."</span>);
+          value = SMITE;
+        }
+        <span class="hljs-keyword">if</span> (self._isValidProperty(key)) {
+          data[key] = self._sanitizeData(value);
+        } <span class="hljs-keyword">else</span> {
+          self._ee.emit(<span class="hljs-string">'error'</span>, <span class="hljs-string">"WARNING: The property ("</span> + key + <span class="hljs-string">") is not a valid Keen.IO property and has been smited."</span>);
+          <span class="hljs-keyword">delete</span> data[key];
+        }
+      });
+    }
+    <span class="hljs-keyword">return</span> data;
+  };
+
+  <span class="hljs-keyword">this</span>._isValidProperty = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(potentialProperty)</span> {</span>
+    <span class="hljs-keyword">if</span> (!potentialProperty) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">if</span> (potentialProperty.length &gt; <span class="hljs-number">256</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">if</span> (potentialProperty.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">'$'</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">if</span> (potentialProperty.indexOf(<span class="hljs-string">'.'</span>) !== -<span class="hljs-number">1</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  };
+  
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+
+}).bind({});
+
+exports = module.exports = KeenEventModule;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

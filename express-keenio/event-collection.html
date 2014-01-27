@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>event-collection.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="default-options.html">
+                default-options.js
+              </a>
+            
+              
+              <a class="source" href="event-collection.html">
+                event-collection.js
+              </a>
+            
+              
+              <a class="source" href="keen-event.html">
+                keen-event.js
+              </a>
+            
+              
+              <a class="source" href="keenio-middleware.html">
+                keenio-middleware.js
+              </a>
+            
+              
+              <a class="source" href="routes.html">
+                routes.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>event-collection.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-pi">"use strict"</span>;
+
+<span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./core/helpers'</span>);
+
+<span class="hljs-keyword">var</span> EventCollectionModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> {</span>
+  <span class="hljs-keyword">this</span>._ee = helpers.setDefaultEvents(eventEmitter, []);
+
+  <span class="hljs-keyword">var</span> handlers = options.handlers,
+      overrideGenerateEventCollectionName = !!(handlers &amp;&amp; handlers.generateEventCollectionName);
+                                                         
+  <span class="hljs-keyword">this</span>.generateName = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> {</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._generateName(route);
+  };
+
+  <span class="hljs-keyword">this</span>._fallbackEventCollectionName = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> {</span>
+    <span class="hljs-keyword">var</span> eventCollection;
+    eventCollection = route.path.replace(<span class="hljs-regexp">/\//g</span>, <span class="hljs-string">"-"</span>);
+    eventCollection = eventCollection.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">'-'</span> ? eventCollection.slice(<span class="hljs-number">1</span>) : eventCollection;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>We have keys - and know which are optional - and which we received data for. We could do more...</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    eventCollection = eventCollection.replace(<span class="hljs-regexp">/:/g</span>, <span class="hljs-string">''</span>);
+    <span class="hljs-keyword">if</span> (eventCollection.length === <span class="hljs-number">0</span>) { <span class="hljs-comment">// If we were accessing the empty path then...</span>
+      eventCollection = <span class="hljs-string">'root'</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Make sure we separate on POST, PUT, DELETE, GET, etc.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    eventCollection = route.method + <span class="hljs-string">'-'</span> + eventCollection;
+
+    <span class="hljs-keyword">return</span> eventCollection;
+  };
+
+  <span class="hljs-keyword">this</span>._isValidEventCollectionName = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(potentialEventCollectionName)</span> {</span>
+    <span class="hljs-keyword">var</span> isAscii = <span class="hljs-regexp">/^[ -~]+$/</span>;
+    <span class="hljs-keyword">if</span> (!potentialEventCollectionName) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">if</span> (potentialEventCollectionName.length &gt; <span class="hljs-number">64</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">if</span> (!isAscii.test(potentialEventCollectionName)) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">if</span> (potentialEventCollectionName.indexOf(<span class="hljs-string">'$'</span>) !== -<span class="hljs-number">1</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">if</span> (potentialEventCollectionName.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">'_'</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">if</span> (potentialEventCollectionName.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">'.'</span> || potentialEventCollectionName.charAt(potentialEventCollectionName.length - <span class="hljs-number">1</span>) === <span class="hljs-string">'.'</span> ) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  };
+
+  <span class="hljs-keyword">this</span>._generateName = overrideGenerateEventCollectionName ? handlers.generateEventCollectionName
+                                                           : <span class="hljs-keyword">this</span>._fallbackEventCollectionName;
+  
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+
+}).bind({});
+
+module.exports = EventCollectionModule;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

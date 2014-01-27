@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>routes.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="default-options.html">
+                default-options.js
+              </a>
+            
+              
+              <a class="source" href="event-collection.html">
+                event-collection.js
+              </a>
+            
+              
+              <a class="source" href="keen-event.html">
+                keen-event.js
+              </a>
+            
+              
+              <a class="source" href="keenio-middleware.html">
+                keenio-middleware.js
+              </a>
+            
+              
+              <a class="source" href="routes.html">
+                routes.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>routes.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-pi">"use strict"</span>;
+
+<span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./core/helpers'</span>);
+
+<span class="hljs-keyword">var</span> RoutesModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> {</span>
+  <span class="hljs-keyword">this</span>._ee = helpers.setDefaultEvents(eventEmitter, []);
+
+  <span class="hljs-keyword">this</span>.isExcludedRoute = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> {</span>
+    <span class="hljs-keyword">if</span> (!route.method || !route.path) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+
+    <span class="hljs-keyword">var</span> excludeRoutes = options.excludeRoutes;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; excludeRoutes.length; i++) {
+      <span class="hljs-keyword">var</span> excludedRoute = excludeRoutes[i];
+      <span class="hljs-keyword">if</span> (route.method.toUpperCase() === excludedRoute.method &amp;&amp; route.path === excludedRoute.route) {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+      }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  };
+
+  <span class="hljs-keyword">this</span>.getRouteConfig = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> {</span>
+    <span class="hljs-keyword">if</span> (!route.method || !route.path) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+        
+    <span class="hljs-keyword">var</span> routes = options.routes;
+    <span class="hljs-keyword">var</span> metadata = {};
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; routes.length; i++) {
+      <span class="hljs-keyword">var</span> includedRoute = routes[i];
+      <span class="hljs-keyword">if</span> (route.method.toUpperCase() === includedRoute.method &amp;&amp; route.path === includedRoute.route) {
+        <span class="hljs-keyword">if</span> (includedRoute.eventCollectionName) {
+          metadata.eventCollectionName = includedRoute.eventCollectionName;
+        }
+        <span class="hljs-keyword">if</span> (includedRoute.tag) {
+          metadata.tag = includedRoute.tag;
+        }
+        <span class="hljs-keyword">return</span> metadata;
+      }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  };
+
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+
+}).bind({});
+
+module.exports = RoutesModule;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
