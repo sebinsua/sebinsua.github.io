@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="route-schemas.html">
+                route-schemas.js
+              </a>
+            
+              
               <a class="source" href="default-options.html">
                 default-options.js
               </a>
@@ -112,12 +117,9 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Grab dependencies required by the middleware.</p>
+              <h2 id="premise">Premise</h2>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> util         = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>),
-    keen         = <span class="hljs-built_in">require</span>(<span class="hljs-string">'keen.io'</span>),</pre></div></div>
             
         </li>
         
@@ -127,6 +129,28 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <ul>
+<li>Events can be seen as an intention-reaction mapping.</li>
+<li>Events belong in a collection together when they can be described by similar properties.</li>
+<li>We should capture almost everything (events, environment, user identity and metadata e.g. repeat visits.)</li>
+<li>Installation should be fast.</li>
+</ul>
+<p>Grab dependencies required by the middleware.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> util         = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>),
+    keen         = <span class="hljs-built_in">require</span>(<span class="hljs-string">'keen.io'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>See <a href="http://github.com/sebinsua/connect-friendwares">connect-friendwares</a>.</p>
 
@@ -138,11 +162,11 @@
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>See <a href="http://sebinsua.github.io/express-keenio/helpers.html">lib/core/helpers</a>.</p>
 
@@ -153,11 +177,11 @@
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>See <a href="http://sebinsua.github.io/express-keenio/options-parser.html">lib/core/options-parser</a>.</p>
 
@@ -168,32 +192,17 @@
         </li>
         
         
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>See <a href="http://sebinsua.github.io/express-keenio/routes.html">lib/routes</a>.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> RoutesModule          = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes'</span>),</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>See <a href="http://sebinsua.github.io/express-keenio/proxy-response.html">lib/parse/proxy-response</a>.</p>
+              <p>See <a href="http://sebinsua.github.io/express-keenio/route-schemas.html">core/route-schemas</a>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    ProxyResponseModule   = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./parse/proxy-response'</span>),</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> RouteSchemas = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./core/route-schemas'</span>);</pre></div></div>
             
         </li>
         
@@ -204,11 +213,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>See <a href="http://sebinsua.github.io/express-keenio/request.html">lib/parse/request</a>.</p>
+              <p>See <a href="http://sebinsua.github.io/express-keenio/routes.html">lib/routes</a>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    RequestModule         = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./parse/request'</span>),</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> RoutesModule          = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes'</span>),</pre></div></div>
             
         </li>
         
@@ -219,11 +228,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>See <a href="http://sebinsua.github.io/express-keenio/identify.html">lib/parse/identify</a>.</p>
+              <p>See <a href="http://sebinsua.github.io/express-keenio/proxy-response.html">lib/parse/proxy-response</a>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    IdentifyModule        = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./parse/identify'</span>),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    ProxyResponseModule   = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./parse/proxy-response'</span>),</pre></div></div>
             
         </li>
         
@@ -234,11 +243,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>See <a href="http://sebinsua.github.io/express-keenio/event-collection.html">lib/event-collection</a>.</p>
+              <p>See <a href="http://sebinsua.github.io/express-keenio/request.html">lib/parse/request</a>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    EventCollectionModule = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./event-collection'</span>),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    RequestModule         = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./parse/request'</span>),</pre></div></div>
             
         </li>
         
@@ -249,11 +258,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>See <a href="http://sebinsua.github.io/express-keenio/keen-event.html">lib/keen-event</a>.</p>
+              <p>See <a href="http://sebinsua.github.io/express-keenio/identify.html">lib/parse/identify</a>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    KeenEventModule       = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./keen-event'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    IdentifyModule        = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./parse/identify'</span>),</pre></div></div>
             
         </li>
         
@@ -263,6 +272,36 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>See <a href="http://sebinsua.github.io/express-keenio/event-collection.html">lib/event-collection</a>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    EventCollectionModule = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./event-collection'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>See <a href="http://sebinsua.github.io/express-keenio/keen-event.html">lib/keen-event</a>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    KeenEventModule       = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./keen-event'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Construct the middleware uninitialised with some default events.</p>
 
@@ -276,13 +315,14 @@
         </li>
         
         
-        <li id="section-13">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>This initialises an internal <code>_ee</code> EventEmitter with the events: error, info, track and flush.</p>
+              <p>This initialises an internal <code>_ee</code> EventEmitter with the events: error, info, track and flush.
+Everything is noop&#39;d.</p>
 
             </div>
             
@@ -292,11 +332,11 @@
         </li>
         
         
-        <li id="section-14">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Bind the EventEmitter methods to the middleware.</p>
 
@@ -311,11 +351,11 @@
         </li>
         
         
-        <li id="section-15">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Before the middleware can be used it must have its configuration passed into it.</p>
 
@@ -325,6 +365,7 @@
   <span class="hljs-keyword">this</span>.options = optionsParser.parse(options);
   
   <span class="hljs-keyword">this</span>._configureHandlers(<span class="hljs-keyword">this</span>.options);
+  <span class="hljs-keyword">this</span>.routeSchemas = <span class="hljs-keyword">new</span> RouteSchemas(<span class="hljs-keyword">this</span>.options);
 
   <span class="hljs-keyword">this</span>.keenClient = keen.configure(options.client);
   <span class="hljs-keyword">this</span>.initialized = <span class="hljs-literal">true</span>;
@@ -334,13 +375,13 @@
         </li>
         
         
-        <li id="section-16">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <p>A method may be called to check whether the middleware has had configure() called before
+              <p>A method may be called to check whether the middleware has had <code>configure()</code> called before
 it is used. It will throw an exception if the middleware has not yet been initialised.</p>
 
             </div>
@@ -356,11 +397,11 @@ it is used. It will throw an exception if the middleware has not yet been initia
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>This method allows us to check that the middleware is in use by Express and not
 just Connect. It does this by checking for the existence of a middleware called
@@ -377,14 +418,34 @@ particularly relating to route definitions.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>There is no good reason to send an event to Keen.IO if it&#39;s for an invalid response.
+The rule is: if the app wouldn&#39;t handle a request, the middleware shouldn&#39;t handle it either.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.isAcceptableStatusCode = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(statusCode)</span> {</span>
+  <span class="hljs-keyword">var</span> whitelistCodes = [<span class="hljs-number">401</span>, <span class="hljs-number">402</span>, <span class="hljs-number">404</span>],
+      firstCharacter = <span class="hljs-built_in">String</span>(statusCode).charAt(<span class="hljs-number">0</span>);
+  <span class="hljs-keyword">return</span> firstCharacter !== <span class="hljs-string">'5'</span> &amp;&amp; firstCharacter !== <span class="hljs-string">'4'</span> || whitelistCodes.indexOf(statusCode) !== -<span class="hljs-number">1</span>;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>This is exposed in order that an instance of the middleware can be passed directly into 
-app.use() - which either executes a function, or looks for the function at an object&#39;s
+<code>app.use()</code> - which either executes a function, or looks for the function at an object&#39;s
 <code>handle</code> property.</p>
 
             </div>
@@ -394,7 +455,7 @@ app.use() - which either executes a function, or looks for the function at an ob
   middleware(req, res, next);
 };
 
-KeenioMiddleware.prototype.handleAll = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+KeenioMiddleware.prototype.handleAll = KeenioMiddleware.prototype.track = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
   <span class="hljs-keyword">this</span>.checkInitialized();
 
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._generateHandler({});
@@ -403,22 +464,24 @@ KeenioMiddleware.prototype.handleAll = <span class="hljs-function"><span class="
         </li>
         
         
-        <li id="section-19">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p><code>trackRoute()</code> allows the middlewares to be attached to specific <a href="http://expressjs.com">Express.js</a>
-routes and to explicitly define their event collection name. </p>
+routes and to explicitly define their event collection name.
+All of its arguments are optional but all of them are beneficial.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.trackRoute = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventCollectionName, eventTag)</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.trackRoute = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventCollectionName, whitelistProperties, eventTag)</span> {</span>
   <span class="hljs-keyword">this</span>.checkInitialized();
 
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._generateHandler({
     eventCollectionName: eventCollectionName,
+    whitelistProperties: whitelistProperties || {},
     tag: eventTag
   });
 };</pre></div></div>
@@ -426,11 +489,11 @@ routes and to explicitly define their event collection name. </p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>This is an internal method which generates the middleware handler when given a routeConfig.
 The routeConfig must be empty if we are using the middleware against the whole app.</p>
@@ -445,11 +508,11 @@ The routeConfig must be empty if we are using the middleware against the whole a
         </li>
         
         
-        <li id="section-21">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>We ensure that the middleware is being used by an express app.</p>
 
@@ -463,11 +526,11 @@ The routeConfig must be empty if we are using the middleware against the whole a
         </li>
         
         
-        <li id="section-22">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>We swap the methods on a response object with proxied versions, and respond
 with a parsedResponseData object that is still in scope of the res object&#39;s proxied
@@ -481,11 +544,11 @@ This may not be the most elegant solution but it works.</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>We setup a function that will be called when a response is finished, and pass 
 in the request object, routeConfig, and parsedResponseData object.
@@ -499,20 +562,34 @@ by the time the response has had its <code>finish</code> event emitted.</p>
 
     <span class="hljs-keyword">return</span> next();
   };
-};
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>This generates a closure that has access to req, _parsedResponseData and routeConfig.
+It should be called by Express when the &#39;finish&#39; event is emitted (see above).</p>
 
-KeenioMiddleware.prototype._finishResponse = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, _parsedResponseData, routeConfig)</span> {</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype._finishResponse = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, _parsedResponseData, routeConfig)</span> {</span>
   <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
   <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onResponseFinish</span><span class="hljs-params">()</span> {</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-24">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>It&#39;s only at the response &#39;finish&#39; event that we can be sure that req.route is set.
 This is due to express populating it in the app.router middleware.</p>
@@ -526,14 +603,34 @@ This is due to express populating it in the app.router middleware.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>If the response was a 5XX error or some kind of malformed request
+we shouldn&#39;t make a <a href="http://keen.io">Keen.IO</a> event. 
+The assumption underlying this is that you want to analyse how people are using the service
+and not how the service is failing, or how attackers are trying to compromise it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (!self.isAcceptableStatusCode(_parsedResponseData.status)) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>If a route is excluded in the configuration we end the middleware having made no requests
-to <a href="http://keen.io">Keen.IO</a>.</p>
+to Keen.IO.</p>
 
             </div>
             
@@ -546,35 +643,37 @@ to <a href="http://keen.io">Keen.IO</a>.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
-              <p>If a route has data stored in the &#39;routes&#39; key of the configuration, we fetch this data.</p>
+              <p>The config is created from multiple configs, which override each other in an order specified by <code>_overrideConfig</code>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (self.options.hasOwnProperty(<span class="hljs-string">'routes'</span>)) {
-      <span class="hljs-keyword">var</span> eventCollectionMetadata = self.routesHandler.getRouteConfig(req.route);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isWhitelistExplicitlyDefined = <span class="hljs-literal">false</span>, config = self.options;
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">var</span> _temp = self._overrideConfig(req.route, routeConfig);
+      isWhitelistExplicitlyDefined = _temp.isWhitelistExplicitlyDefined;
+      config = _temp.config;
+    } <span class="hljs-keyword">catch</span> (err) {</pre></div></div>
             
         </li>
         
         
-        <li id="section-27">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <p>If a route has no config but the configuration does have a routes key then consider it excluded.</p>
+              <p>The config has a routes key, but this route was not defined inside it. Yugh.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (!eventCollectionMetadata) { <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; }
-
-      routeConfig = helpers.extend({}, eventCollectionMetadata, routeConfig);
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
     }
 
     <span class="hljs-keyword">var</span> identity = self.identifyHandler.identify(req),
@@ -586,49 +685,84 @@ to <a href="http://keen.io">Keen.IO</a>.</p>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>We test to see if an event collection name is defined by any configuration and that it is valid.
 If it is not valid then we attempt to generate it from the route.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (routeConfig.eventCollectionName) {
-      <span class="hljs-keyword">if</span> (self.eventCollectionHandler._isValidEventCollectionName(routeConfig.eventCollectionName)) {
-        eventCollection = routeConfig.eventCollectionName;
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (config.eventCollectionName) {
+      <span class="hljs-keyword">if</span> (self.eventCollectionHandler._isValidEventCollectionName(config.eventCollectionName)) {
+        eventCollection = config.eventCollectionName;
       } <span class="hljs-keyword">else</span> {
-        self.emit(<span class="hljs-string">'error'</span>, <span class="hljs-string">'ERROR: '</span> + routeConfig.eventCollectionName + <span class="hljs-string">' is not a valid event collection name so another has been automatically generated.'</span>);
+        self.emit(<span class="hljs-string">'error'</span>, <span class="hljs-string">'ERROR: '</span> + config.eventCollectionName + <span class="hljs-string">' is not a valid event collection name so another has been automatically generated.'</span>);
         eventCollection = self.eventCollectionHandler.generateName(req.route);
       }
     } <span class="hljs-keyword">else</span> {
       eventCollection = self.eventCollectionHandler.generateName(req.route);
     }
 
-    keenEvent = self.keenEventHandler.generateEvent(identity, parsedRequestData, parsedResponseData, routeConfig);
+    <span class="hljs-keyword">try</span> {
+      keenEvent = self.keenEventHandler.generateEvent(identity, parsedRequestData, parsedResponseData, config);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>If the whitelist was defined explicitly, then we won&#39;t be trying to create a whitelist in the background.</p>
 
-    self._track(eventCollection, keenEvent);
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (!isWhitelistExplicitlyDefined) {
+        self.routeSchemas.add(req.route, keenEvent);
+      }
+
+      self._trackEvent(eventCollection, keenEvent);
+    } <span class="hljs-keyword">catch</span> (e) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>If there are any errors do not send the event to Keen.IO.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      self.emit(<span class="hljs-string">"error"</span>, e);
+    }
   };
 };</pre></div></div>
             
         </li>
         
         
-        <li id="section-29">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Given an event collection name and a Keen.IO event we send out a track event
 and make a request to Keen.IO.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype._track = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventCollection, keenEvent)</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype._trackEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventCollection, keenEvent)</span> {</span>
   <span class="hljs-keyword">var</span> keenioMiddlewareScope = <span class="hljs-keyword">this</span>;
   <span class="hljs-keyword">this</span>.emit(<span class="hljs-string">"track"</span>, { eventCollection: eventCollection, keenEvent: keenEvent });
   <span class="hljs-keyword">this</span>.keenClient.addEvent(eventCollection, keenEvent, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err, res)</span> {</span>
@@ -642,6 +776,117 @@ and make a request to Keen.IO.</p>
       keenioMiddlewareScope.emit(<span class="hljs-string">"info"</span>, <span class="hljs-string">"Keen.IO event not created."</span>);
     }
   });
+};
+
+KeenioMiddleware.prototype._overrideConfig = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route, routeConfig)</span> {</span>
+  <span class="hljs-keyword">var</span> config = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>We <em>DO NOT</em> <code>getWhitelist()</code> or <code>routeSchema.add()</code> if an explicit whitelist was set.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> isWhitelistExplicitlyDefined = <span class="hljs-literal">false</span>;
+  <span class="hljs-keyword">if</span> (   (<span class="hljs-keyword">this</span>.options.whitelistProperties &amp;&amp; <span class="hljs-built_in">Object</span>.keys(<span class="hljs-keyword">this</span>.options.whitelistProperties).length) ||
+         (routeConfig.whitelistProperties &amp;&amp; <span class="hljs-built_in">Object</span>.keys(routeConfig.whitelistProperties).length)) {
+    isWhitelistExplicitlyDefined = <span class="hljs-literal">true</span>;
+  }
+
+  <span class="hljs-keyword">var</span> _configs = [];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>If a route has data stored in the &#39;routes&#39; key of the configuration, we fetch this data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> _hasRouteConfig = <span class="hljs-keyword">this</span>.options.hasOwnProperty(<span class="hljs-string">'routes'</span>);
+  <span class="hljs-keyword">if</span> (_hasRouteConfig) {
+    <span class="hljs-keyword">var</span> eventCollectionMetadata = <span class="hljs-keyword">this</span>.routesHandler.getRouteConfig(route);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>If a route has no config but the configuration does have a routes key then consider it excluded.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (!eventCollectionMetadata) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Config has a routes key, but this route is not defined."</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>If it was set in the event collections metadata, then we reset the is whitelist explicitly defined value.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    isWhitelistExplicitlyDefined = isWhitelistExplicitlyDefined || eventCollectionMetadata.whitelistProperties;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p><code>routeConfig.*</code> should override the <code>eventCollectiomMetadata.*</code> which should override the <code>options.*</code> 
+and the <code>_whitelistPropertiesConfig</code> which is a fallback set later on if the whitelist was not explicitly defined.
+(This is about whitelists, but <code>eventCollectionName</code> and <code>tag</code> are also overridden in this order.)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _configs = [eventCollectionMetadata, routeConfig];
+  } <span class="hljs-keyword">else</span> {
+    _configs = [routeConfig];
+  }
+
+  <span class="hljs-keyword">var</span> _optionsWhitelist = <span class="hljs-keyword">this</span>.options.whitelistProperties, _preConfig;
+  <span class="hljs-keyword">if</span> (isWhitelistExplicitlyDefined) {
+    _preConfig = [{}, _optionsWhitelist];
+    _configs = _preConfig.concat.apply(_preConfig, _configs);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">var</span> _whitelistPropertiesConfig = { whitelistProperties: <span class="hljs-keyword">this</span>.routeSchemas.getWhitelist(route) };
+    _preConfig = [{}, _whitelistPropertiesConfig, _optionsWhitelist];
+    _configs = _preConfig.concat.apply(_preConfig, _configs);
+  }
+
+  config = helpers.extend.apply(helpers, _configs);
+
+  <span class="hljs-keyword">return</span> {
+    config: config,
+    isWhitelistExplicitlyDefined: isWhitelistExplicitlyDefined
+  };
 };
 
 KeenioMiddleware.prototype._configureHandlers = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>

@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="route-schemas.html">
+                route-schemas.js
+              </a>
+            
+              
               <a class="source" href="default-options.html">
                 default-options.js
               </a>
@@ -104,6 +109,7 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-pi">"use strict"</span>;
 
 <span class="hljs-keyword">var</span> noop = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>};
+<span class="hljs-keyword">var</span> identity = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(i)</span> {</span> <span class="hljs-keyword">return</span> !!i; }
 
 <span class="hljs-keyword">var</span> isFunction = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(value) === <span class="hljs-string">'[object Function]'</span>; } 
 <span class="hljs-keyword">var</span> isObject = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(value) === <span class="hljs-string">'[object Object]'</span>; };
@@ -195,6 +201,7 @@ module.exports.isNumber = isNumber;
 module.exports.isArrayOfObjects = isArrayOfObjects;
 
 module.exports.noop = noop;
+module.exports.identity = identity;
 module.exports.forEach = forEach;
 module.exports.extend = extend;
 

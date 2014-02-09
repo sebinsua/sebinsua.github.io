@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="route-schemas.html">
+                route-schemas.js
+              </a>
+            
+              
               <a class="source" href="default-options.html">
                 default-options.js
               </a>
@@ -143,11 +148,82 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
+              <p>Defaults for properties that should not be <em>SMITED</em> before they are sent to Keen.IO (further to other validation.)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  whitelistProperties: {},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
               <p>Defaults for properties that should be <em>SMITED</em> before they are sent to Keen.IO. This is on addition to any properties like &#39;password&#39;.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  blacklistProperties: []
+            <div class="content"><div class='highlight'><pre>  blacklistProperties: [],</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Defaults for internal values.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  defaults: {
+    MAX_PROPERTY_HIERARCHY_DEPTH: <span class="hljs-number">10</span>,
+    MAX_STRING_LENGTH: <span class="hljs-number">1000</span>,
+    MAX_PROPERTY_QUANTITY: <span class="hljs-number">300</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>By default the addons are switched on.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    addons: {
+      ipToGeo: <span class="hljs-literal">true</span>,
+      userAgentParser: <span class="hljs-literal">true</span>
+    },
+    eventualSchemas: {
+      cache: <span class="hljs-literal">true</span>,
+      cachePath: <span class="hljs-string">'./route-schemas.cache'</span>,
+      query: {
+        MAX_PROPERTIES: <span class="hljs-number">30</span>,
+        NUMBER_OF_INSTANCES: <span class="hljs-number">500</span>,
+        NUMBER_OF_DAYS: <span class="hljs-number">7</span>
+      },
+      body: {
+        MAX_PROPERTIES: <span class="hljs-number">80</span>,
+        NUMBER_OF_INSTANCES: <span class="hljs-number">500</span>,
+        NUMBER_OF_DAYS: <span class="hljs-number">7</span>
+      },
+      reaction: {
+        MAX_PROPERTIES: <span class="hljs-number">120</span>,
+        NUMBER_OF_INSTANCES: <span class="hljs-number">500</span>,
+        NUMBER_OF_DAYS: <span class="hljs-number">7</span>
+      }
+    }
+  }
 };</pre></div></div>
             
         </li>

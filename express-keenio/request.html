@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="route-schemas.html">
+                route-schemas.js
+              </a>
+            
+              
               <a class="source" href="default-options.html">
                 default-options.js
               </a>
@@ -126,7 +131,7 @@
       method: req.method,
       path: req.path,
       params: _getParams(req.route.params),
-      body: <span class="hljs-keyword">this</span>.parseRequestBody(req),
+      body: <span class="hljs-keyword">this</span>.parseRequestBody(req) || {},
       query: req.query,
       referer: req.get(<span class="hljs-string">'Referer'</span>)
     };

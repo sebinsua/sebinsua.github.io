@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="route-schemas.html">
+                route-schemas.js
+              </a>
+            
+              
               <a class="source" href="default-options.html">
                 default-options.js
               </a>
@@ -128,9 +133,7 @@
     <span class="hljs-keyword">if</span> (req.user) {
       identity.user = req.user;
     }
-
-    <span class="hljs-keyword">return</span> identity;
-  };</pre></div></div>
+    <span class="hljs-keyword">if</span> (req.ip) {</pre></div></div>
             
         </li>
         
@@ -140,6 +143,25 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>X-Forwarded-For will only be used if app.enable(&#39;trust proxy&#39;) was used earlier.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      identity.ipAddress = req.ip;
+    }
+
+    <span class="hljs-keyword">return</span> identity;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>The internal method can be overridden in the options.handlers key-value object.</p>
 

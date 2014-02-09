@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>index.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-pi">"use strict"</span>;
+
+<span class="hljs-keyword">var</span> utils = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./lib/utils'</span>),
+    extend = utils.extend,
+    forEach = utils.forEach,
+    isArray = utils.isArray,
+    isObject = utils.isObject,
+    isEnumerable = utils.isEnumerable,
+    isArrayOfObjects = utils.isArrayOfObjects,
+    isArrayOfFunctions = utils.isArrayOfFunctions,
+    isArrayOfNonEnumerables = utils.isArrayOfNonEnumerables;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>An eventual schema exists for a key-value object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> EventualSchema = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rules)</span> {</span>
+  <span class="hljs-keyword">this</span>._instantiatedDate = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+  <span class="hljs-keyword">this</span>._instanceCount = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">this</span>._propertyCount = <span class="hljs-number">0</span>;
+
+  <span class="hljs-keyword">this</span>._collatedInstances = <span class="hljs-literal">null</span>;
+
+  <span class="hljs-keyword">this</span>._rules = (rules &amp;&amp; <span class="hljs-keyword">this</span>._checkRules(rules)) || [];
+
+  <span class="hljs-keyword">this</span>.initEventualSchema();
+};
+
+EventualSchema.prototype._checkRules = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rules)</span> {</span>
+  <span class="hljs-keyword">var</span> isRulesListOfFunctions = isArrayOfFunctions(rules);
+  <span class="hljs-keyword">if</span> (!isRulesListOfFunctions) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"EventualSchema's rules argument should only be passed a list of functions."</span>);
+  }
+
+  <span class="hljs-keyword">return</span> rules;
+};
+
+EventualSchema.prototype.initEventualSchema = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventualSchema, isFrozen)</span> {</span>
+  <span class="hljs-keyword">this</span>._eventualSchema = <span class="hljs-literal">null</span>;
+  <span class="hljs-keyword">this</span>.frozen = <span class="hljs-literal">false</span>;
+  
+  <span class="hljs-keyword">if</span> (isFrozen) {
+    <span class="hljs-keyword">this</span>._eventualSchema = eventualSchema || {};
+    <span class="hljs-keyword">this</span>.frozen = isFrozen;
+  }
+};
+
+EventualSchema.prototype.get = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.frozen) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"You cannot get the _eventualSchema until the necessary rules have been passed."</span>);
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._eventualSchema;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>It does have to recurse when adding.</p>
+<p>Given three of these:</p>
+<pre><code class="lang-json">{
+  a: {
+    num: 7,
+    arr: []
+  },
+  b: {
+      arr: [
+        {
+            name: &#39;hello world&#39;
+        }
+      ],
+      value: {
+        type: &#39;person&#39;,
+        name: &#39;gilly&#39;
+      }
+  },
+  c: {
+    arr: []
+  }
+}
+</code></pre>
+<p>Create this:</p>
+<pre><code class="lang-json">{
+  a: {
+    _propertyCount: 3,
+    num: { _propertyCount: 3 },
+    arr: { _propertyCount: 3 }
+  },
+  b: {
+    _propertyCount: 3,
+    arr: [
+      {
+        name: { _propertyCount: 3 }
+      }
+    ],
+    value: {
+      _propertyCount: 3,
+      type: { _propertyCount: 3 },
+      name: { _propertyCount: 3 }
+    }
+  },
+  c: {
+    _propertyCount: 3,
+    arr: { _propertyCount: 3 }
+  }
+}
+</code></pre>
+<p>I chose this representation because even-though I need to recurse to create it, 
+when I try to recurse later on to simplify the structure I can do so easily.
+It also allows more information and does not impart a syntax onto the idea of deep
+property hierarchies and is therefore generalised to more use-cases.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>EventualSchema.prototype.add = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(instance)</span> {</span>
+  <span class="hljs-keyword">this</span>._checkIfFrozen();
+
+  <span class="hljs-keyword">this</span>._collatedInstances = <span class="hljs-keyword">this</span>._addInstance(<span class="hljs-keyword">this</span>._collatedInstances, instance);
+  <span class="hljs-keyword">this</span>._instanceCount += <span class="hljs-number">1</span>;
+
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._isReadyToFreeze()) {
+    <span class="hljs-keyword">this</span>._freeze();
+  }
+
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+};
+
+EventualSchema.prototype.freeze = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">this</span>._checkIfFrozen();
+
+  <span class="hljs-keyword">this</span>._freeze();
+
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+};
+
+EventualSchema.prototype._checkIfFrozen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.frozen) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Once frozen EventualSchema#get() is the only callable method."</span>);
+  }
+};
+
+EventualSchema.prototype._addInstance = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(collatedInstances, instance, increaseCount)</span> {</span>
+  <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+
+  increaseCount = increaseCount === <span class="hljs-literal">undefined</span> ? <span class="hljs-literal">true</span> : increaseCount;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>If we are operating upon just a value, then we just return this.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (!isEnumerable(instance) || isArrayOfNonEnumerables(instance)) {
+    collatedInstances = collatedInstances || {};
+
+    <span class="hljs-keyword">return</span> collatedInstances;
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>If what we are operating upon is an object or an array then we execute this.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (isObject(instance)) {
+    collatedInstances = collatedInstances || {};
+    forEach(instance, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(instanceValue, instanceKey)</span> {</span>
+      <span class="hljs-keyword">var</span> currentEventualSchemaLevel = collatedInstances[instanceKey] || {};
+
+      <span class="hljs-keyword">var</span> keyAddedForFirstTime = !(instanceKey <span class="hljs-keyword">in</span> collatedInstances);
+      increaseCount = !keyAddedForFirstTime;
+
+      currentEventualSchemaLevel = self._addInstance(currentEventualSchemaLevel, instanceValue, <span class="hljs-literal">true</span>);
+      currentEventualSchemaLevel._propertyCount = (increaseCount &amp;&amp; currentEventualSchemaLevel._propertyCount) ? currentEventualSchemaLevel._propertyCount + <span class="hljs-number">1</span> : <span class="hljs-number">1</span>;
+
+      <span class="hljs-keyword">if</span> (keyAddedForFirstTime) {
+        self._propertyCount += <span class="hljs-number">1</span>;
+      }
+
+      collatedInstances[instanceKey] = currentEventualSchemaLevel;
+    });
+
+    <span class="hljs-keyword">return</span> collatedInstances;
+  }
+
+  <span class="hljs-keyword">if</span> (isArrayOfObjects(instance)) {
+    collatedInstances = collatedInstances || {};
+    forEach(instance, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(instanceValue, instanceKey)</span> {</span>
+      <span class="hljs-keyword">var</span> currentEventualSchemaLevel = {};
+
+      currentEventualSchemaLevel._arrayObjects = self._addInstance(extend({}, collatedInstances._arrayObjects), instanceValue, <span class="hljs-literal">false</span>);
+      currentEventualSchemaLevel._propertyCount = collatedInstances._propertyCount ? collatedInstances._propertyCount : <span class="hljs-number">0</span>; <span class="hljs-comment">// @todo: the reason for it being set to 0 here is that it wil be increased immediately afterwards.</span>
+
+      collatedInstances = currentEventualSchemaLevel;
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>@todo: BUG: the array of objects code is causing the property to be counted wrongly in two places.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> collatedInstances;
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>The only point we reach this line is if we&#39;ve finished recursing and are on the first level of the instance.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> collatedInstances;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>If any of the rules return <code>true</code> we are ready to freeze.
+No rules: no freezing.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>EventualSchema.prototype._isReadyToFreeze = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ctx)</span> {</span>
+  <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+
+  ctx = ctx || {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>If <em>any</em> of these rules is true, then it shall freeze is true, otherwise it will be false.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> isReadyToFreeze =  <span class="hljs-keyword">this</span>._rules.length &gt; <span class="hljs-number">0</span> ? <span class="hljs-keyword">this</span>._rules.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(acc, fn)</span> {</span>
+    <span class="hljs-keyword">return</span> acc || fn.call(self, ctx);
+  }, <span class="hljs-literal">false</span>) : <span class="hljs-literal">false</span>;
+
+  <span class="hljs-keyword">return</span> isReadyToFreeze;
+};
+
+EventualSchema.prototype._freeze = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">this</span>._generateEventualSchema(<span class="hljs-keyword">this</span>._collatedInstances);
+  <span class="hljs-keyword">this</span>.frozen = <span class="hljs-literal">true</span>;
+
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.frozen;
+};
+
+EventualSchema.prototype._generateEventualSchema = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(collatedInstances)</span> {</span>
+  <span class="hljs-keyword">this</span>._eventualSchema = collatedInstances;
+
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._eventualSchema;
+};
+
+exports = module.exports = EventualSchema;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
