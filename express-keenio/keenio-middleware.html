@@ -350,8 +350,7 @@ Everything is noop&#39;d.</p>
 
   <span class="hljs-keyword">this</span>.keenClient = keen.configure(options.client);
   <span class="hljs-keyword">this</span>.initialized = <span class="hljs-literal">true</span>;
-  <span class="hljs-keyword">this</span>.emit(<span class="hljs-string">'initialized'</span>);
-};</pre></div></div>
+  <span class="hljs-keyword">this</span>.emit(<span class="hljs-string">'initialized'</span>);</pre></div></div>
             
         </li>
         
@@ -361,6 +360,22 @@ Everything is noop&#39;d.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Returning <code>this</code> makes it possible to <code>require()</code> and <code>configure()</code> the middleware in one statement.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>A method may be called to check whether the middleware has had <code>configure()</code> called before
 it is used. It will throw an exception if the middleware has not yet been initialised.</p>
@@ -378,11 +393,11 @@ it is used. It will throw an exception if the middleware has not yet been initia
         </li>
         
         
-        <li id="section-18">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>This method allows us to check that the middleware is in use by Express and not
 just Connect. It does this by checking for the existence of a middleware called
@@ -399,11 +414,11 @@ particularly relating to route definitions.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>There is no good reason to send an event to Keen.IO if it&#39;s for an invalid response.
 The rule is: if the app wouldn&#39;t handle a request, the middleware shouldn&#39;t handle it either.</p>
@@ -419,11 +434,11 @@ The rule is: if the app wouldn&#39;t handle a request, the middleware shouldn&#3
         </li>
         
         
-        <li id="section-20">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>This is exposed in order that an instance of the middleware can be passed directly into 
 <code>app.use()</code> - which either executes a function, or looks for the function at an object&#39;s
@@ -445,11 +460,11 @@ KeenioMiddleware.prototype.handleAll = KeenioMiddleware.prototype.track = <span 
         </li>
         
         
-        <li id="section-21">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p><code>trackRoute()</code> allows the middlewares to be attached to specific <a href="http://expressjs.com">Express.js</a>
 routes and to explicitly define their event collection name.
@@ -470,11 +485,11 @@ All of its arguments are optional but all of them are beneficial.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>This is an internal method which generates the middleware handler when given a routeConfig.
 The routeConfig must be empty if we are using the middleware against the whole app.</p>
@@ -489,11 +504,11 @@ The routeConfig must be empty if we are using the middleware against the whole a
         </li>
         
         
-        <li id="section-23">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>We ensure that the middleware is being used by an express app.</p>
 
@@ -507,11 +522,11 @@ The routeConfig must be empty if we are using the middleware against the whole a
         </li>
         
         
-        <li id="section-24">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>We swap the methods on a response object with proxied versions, and respond
 with a parsedResponseData object that is still in scope of the res object&#39;s proxied
@@ -525,11 +540,11 @@ This may not be the most elegant solution but it works.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>We setup a function that will be called when a response is finished, and pass 
 in the request object, routeConfig, and parsedResponseData object.
@@ -548,11 +563,11 @@ by the time the response has had its <code>finish</code> event emitted.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>This generates a closure that has access to req, _parsedResponseData and routeConfig.
 It should be called by Express when the &#39;finish&#39; event is emitted (see above).</p>
@@ -566,11 +581,11 @@ It should be called by Express when the &#39;finish&#39; event is emitted (see a
         </li>
         
         
-        <li id="section-27">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>It&#39;s only at the response &#39;finish&#39; event that we can be sure that req.route is set.
 This is due to express populating it in the app.router middleware.</p>
@@ -584,11 +599,11 @@ This is due to express populating it in the app.router middleware.</p>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>If the response was a 5XX error or some kind of malformed request
 we shouldn&#39;t make a <a href="http://keen.io">Keen.IO</a> event. 
@@ -604,11 +619,11 @@ and not how the service is failing, or how attackers are trying to compromise it
         </li>
         
         
-        <li id="section-29">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>If a route is excluded in the configuration we end the middleware having made no requests
 to Keen.IO.</p>
@@ -624,11 +639,11 @@ to Keen.IO.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>The config is created from multiple configs, which override each other in an order specified by <code>_overrideConfig</code>.</p>
 
@@ -644,11 +659,11 @@ to Keen.IO.</p>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>The config has a routes key, but this route was not defined inside it. Yugh.</p>
 
@@ -666,11 +681,11 @@ to Keen.IO.</p>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>We test to see if an event collection name is defined by any configuration and that it is valid.
 If it is not valid then we attempt to generate it from the route.</p>
@@ -694,11 +709,11 @@ If it is not valid then we attempt to generate it from the route.</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>If the whitelist was defined explicitly, then we won&#39;t be trying to create a whitelist in the background.</p>
 
@@ -714,11 +729,11 @@ If it is not valid then we attempt to generate it from the route.</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>If there are any errors do not send the event to Keen.IO.</p>
 
@@ -732,11 +747,11 @@ If it is not valid then we attempt to generate it from the route.</p>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Given an event collection name and a Keen.IO event we send out a track event
 and make a request to Keen.IO.</p>
@@ -765,11 +780,11 @@ KeenioMiddleware.prototype._overrideConfig = <span class="hljs-function"><span c
         </li>
         
         
-        <li id="section-36">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>We <em>DO NOT</em> <code>getWhitelist()</code> or <code>routeSchema.add()</code> if an explicit whitelist was set.</p>
 
@@ -786,11 +801,11 @@ KeenioMiddleware.prototype._overrideConfig = <span class="hljs-function"><span c
         </li>
         
         
-        <li id="section-37">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>If a route has data stored in the &#39;routes&#39; key of the configuration, we fetch this data.</p>
 
@@ -803,11 +818,11 @@ KeenioMiddleware.prototype._overrideConfig = <span class="hljs-function"><span c
         </li>
         
         
-        <li id="section-38">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>If a route has no config but the configuration does have a routes key then consider it excluded.</p>
 
@@ -820,11 +835,11 @@ KeenioMiddleware.prototype._overrideConfig = <span class="hljs-function"><span c
         </li>
         
         
-        <li id="section-39">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>If it was set in the event collections metadata, then we reset the is whitelist explicitly defined value.</p>
 
@@ -835,11 +850,11 @@ KeenioMiddleware.prototype._overrideConfig = <span class="hljs-function"><span c
         </li>
         
         
-        <li id="section-40">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p><code>routeConfig.*</code> should override the <code>eventCollectiomMetadata.*</code> which should override the <code>options.*</code> 
 and the <code>_whitelistPropertiesConfig</code> which is a fallback set later on if the whitelist was not explicitly defined.

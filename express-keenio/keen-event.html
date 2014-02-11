@@ -117,10 +117,10 @@
       MAX_STRING_LENGTH = options.defaults &amp;&amp; options.defaults.MAX_STRING_LENGTH || <span class="hljs-number">1000</span>,
       MAX_PROPERTY_QUANTITY = options.defaults &amp;&amp; options.defaults.MAX_PROPERTY_QUANTITY || <span class="hljs-number">300</span>;
 
-  <span class="hljs-keyword">this</span>._setupAddons = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(addonSwitches)</span> {</span>
+  <span class="hljs-keyword">this</span>._setupAddons = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(keenEvent, addonSwitches)</span> {</span>
     <span class="hljs-keyword">var</span> keenAddons = [];
 
-    <span class="hljs-keyword">if</span> (addonSwitches.ipToGeo) {
+    <span class="hljs-keyword">if</span> (keenEvent.identity.ipAddress &amp;&amp; addonSwitches.ipToGeo) {
       keenAddons.push({
         name: <span class="hljs-string">"keen:ip_to_geo"</span>,
         input: {
@@ -129,7 +129,7 @@
         output: <span class="hljs-string">"identity.ipGeography"</span>
       });
     }
-    <span class="hljs-keyword">if</span> (addonSwitches.userAgentParser) {
+    <span class="hljs-keyword">if</span> (keenEvent.identity.userAgent &amp;&amp; addonSwitches.userAgentParser) {
       keenAddons.push({
         name: <span class="hljs-string">"keen:ua_parser"</span>,
         input: {
@@ -159,10 +159,9 @@
         ipAddress: <span class="hljs-string">'${keen.ip}'</span>,
         userAgent: <span class="hljs-string">'${keen.user_agent}'</span>
       },
-      keen: {
-        addons: <span class="hljs-keyword">this</span>._setupAddons(options.defaults.addons)
-      }
+      keen: {}
     };
+    keenEvent.keen.addons = <span class="hljs-keyword">this</span>._setupAddons(keenEvent, options.defaults.addons);
 
     <span class="hljs-keyword">if</span> (parsedRequestData.referer) {
       keenEvent.intention.referer = parsedRequestData.referer;
