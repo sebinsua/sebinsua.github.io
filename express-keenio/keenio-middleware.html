@@ -288,7 +288,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">KeenioMiddleware</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">KeenioMiddleware</span> <span class="hljs-params">()</span> </span>{
   <span class="hljs-keyword">this</span>.options = {};
   <span class="hljs-keyword">this</span>.handlers = {};
   <span class="hljs-keyword">this</span>.initialized = <span class="hljs-literal">false</span>;</pre></div></div>
@@ -303,7 +303,7 @@
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>This initialises an internal <code>_ee</code> EventEmitter with the events: error, info, track and flush.
-Everything is noop&#39;d.</p>
+Everything is noop’d.</p>
 
             </div>
             
@@ -323,8 +323,8 @@ Everything is noop&#39;d.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>helpers.forEach(EventEmitter.prototype, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fn, key)</span> {</span>
-  KeenioMiddleware.prototype[key] = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>helpers.forEach(EventEmitter.prototype, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fn, key)</span> </span>{
+  KeenioMiddleware.prototype[key] = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>._ee[key].apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
   };
 });</pre></div></div>
@@ -342,9 +342,9 @@ Everything is noop&#39;d.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.configure = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.configure = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> </span>{
   <span class="hljs-keyword">this</span>.options = optionsParser.parse(options);
-  
+
   <span class="hljs-keyword">this</span>._configureHandlers(<span class="hljs-keyword">this</span>.options);
   <span class="hljs-keyword">this</span>.routeSchemas = <span class="hljs-keyword">new</span> RouteSchemas(<span class="hljs-keyword">this</span>.options);
 
@@ -382,7 +382,7 @@ it is used. It will throw an exception if the middleware has not yet been initia
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.checkInitialized = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.checkInitialized = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
   <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.initialized) {
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'express-keenio middleware must be configured before use. Please call '</span> +
                     <span class="hljs-string">'keenio-middleware#configure(options).'</span>);
@@ -401,13 +401,13 @@ it is used. It will throw an exception if the middleware has not yet been initia
               </div>
               <p>This method allows us to check that the middleware is in use by Express and not
 just Connect. It does this by checking for the existence of a middleware called
-&#39;expressInit&#39;. </p>
+‘expressInit’.</p>
 <p>The purpose of this is that the middleware requires some behaviours given by Express,
 particularly relating to route definitions.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.isMiddlewareUsedByExpress = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(app)</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.isMiddlewareUsedByExpress = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(app)</span> </span>{
   <span class="hljs-keyword">return</span> friendwares(app).has(<span class="hljs-string">'expressInit'</span>);
 };</pre></div></div>
             
@@ -420,12 +420,13 @@ particularly relating to route definitions.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
-              <p>There is no good reason to send an event to Keen.IO if it&#39;s for an invalid response.
-The rule is: if the app wouldn&#39;t handle a request, the middleware shouldn&#39;t handle it either.</p>
+              <p>There is no good reason to send an event to Keen.IO if it’s for an invalid response.
+The default is: if the app wouldn’t handle a request, the middleware shouldn’t handle it either.
+This behaviour can be switched off by modifying the config option <code>httpErrorsRecorded</code> to be true.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.isAcceptableStatusCode = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(statusCode)</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.isAcceptableStatusCode = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(statusCode)</span> </span>{
   <span class="hljs-keyword">var</span> whitelistCodes = [<span class="hljs-number">401</span>, <span class="hljs-number">402</span>, <span class="hljs-number">404</span>],
       firstCharacter = <span class="hljs-built_in">String</span>(statusCode).charAt(<span class="hljs-number">0</span>);
   <span class="hljs-keyword">return</span> firstCharacter !== <span class="hljs-string">'5'</span> &amp;&amp; firstCharacter !== <span class="hljs-string">'4'</span> || whitelistCodes.indexOf(statusCode) !== -<span class="hljs-number">1</span>;
@@ -440,18 +441,18 @@ The rule is: if the app wouldn&#39;t handle a request, the middleware shouldn&#3
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
-              <p>This is exposed in order that an instance of the middleware can be passed directly into 
-<code>app.use()</code> - which either executes a function, or looks for the function at an object&#39;s
-<code>handle</code> property.</p>
+              <p>This is exposed in order that an instance of the middleware can be passed directly into
+<code>app.use()</code> - which either executes a function, or looks for the function at an object’s
+<code>handle</code> property (not supported from Express 4.0 onwards.)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.handle = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">keenioHandler</span><span class="hljs-params">(req, res, next)</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.handle = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">keenioHandler</span><span class="hljs-params">(req, res, next)</span> </span>{
   <span class="hljs-keyword">var</span> middleware = <span class="hljs-keyword">this</span>.handleAll();
   middleware(req, res, next);
 };
 
-KeenioMiddleware.prototype.handleAll = KeenioMiddleware.prototype.track = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+KeenioMiddleware.prototype.handleAll = KeenioMiddleware.prototype.track = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
   <span class="hljs-keyword">this</span>.checkInitialized();
 
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._generateHandler({});
@@ -472,7 +473,7 @@ All of its arguments are optional but all of them are beneficial.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.trackRoute = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventCollectionName, whitelistProperties, eventTag)</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype.trackRoute = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventCollectionName, whitelistProperties, eventTag)</span> </span>{
   <span class="hljs-keyword">this</span>.checkInitialized();
 
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._generateHandler({
@@ -496,10 +497,10 @@ The routeConfig must be empty if we are using the middleware against the whole a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype._generateHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(routeConfig)</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype._generateHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(routeConfig)</span> </span>{
   <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
 
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">keenioHandler</span><span class="hljs-params">(req, res, next)</span> {</span></pre></div></div>
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">keenioHandler</span><span class="hljs-params">(req, res, next)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -529,7 +530,7 @@ The routeConfig must be empty if we are using the middleware against the whole a
                 <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>We swap the methods on a response object with proxied versions, and respond
-with a parsedResponseData object that is still in scope of the res object&#39;s proxied
+with a parsedResponseData object that is still in scope of the res object’s proxied
 response methods (closures.)
 This may not be the most elegant solution but it works.</p>
 
@@ -546,7 +547,7 @@ This may not be the most elegant solution but it works.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
-              <p>We setup a function that will be called when a response is finished, and pass 
+              <p>We setup a function that will be called when a response is finished, and pass
 in the request object, routeConfig, and parsedResponseData object.
 The parsedResponseData object at this point contains no data, but since it is
 still in the scope of the proxied response object it will contain response data
@@ -570,13 +571,13 @@ by the time the response has had its <code>finish</code> event emitted.</p>
                 <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>This generates a closure that has access to req, _parsedResponseData and routeConfig.
-It should be called by Express when the &#39;finish&#39; event is emitted (see above).</p>
+It should be called by Express when the ‘finish’ event is emitted (see above).</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype._finishResponse = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, _parsedResponseData, routeConfig)</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype._finishResponse = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, _parsedResponseData, routeConfig)</span> </span>{
   <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onResponseFinish</span><span class="hljs-params">()</span> {</span></pre></div></div>
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onResponseFinish</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -587,7 +588,7 @@ It should be called by Express when the &#39;finish&#39; event is emitted (see a
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
-              <p>It&#39;s only at the response &#39;finish&#39; event that we can be sure that req.route is set.
+              <p>It’s only at the response ‘finish’ event that we can be sure that req.route is set.
 This is due to express populating it in the app.router middleware.</p>
 
             </div>
@@ -606,13 +607,14 @@ This is due to express populating it in the app.router middleware.</p>
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>If the response was a 5XX error or some kind of malformed request
-we shouldn&#39;t make a <a href="http://keen.io">Keen.IO</a> event. 
+<em>by default</em> we shouldn’t make a <a href="http://keen.io">Keen.IO</a> event.
 The assumption underlying this is that you want to analyse how people are using the service
 and not how the service is failing, or how attackers are trying to compromise it.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (!self.isAcceptableStatusCode(_parsedResponseData.status)) {
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (self.options.httpErrorsRecorded === <span class="hljs-literal">false</span> &amp;&amp;
+       !self.isAcceptableStatusCode(_parsedResponseData.status)) {
       <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
     }</pre></div></div>
             
@@ -675,7 +677,7 @@ to Keen.IO.</p>
     <span class="hljs-keyword">var</span> identity = self.identifyHandler.identify(req),
         parsedRequestData = self.requestHandler.parseRequestObject(req),
         parsedResponseData = _parsedResponseData;
-    
+
     <span class="hljs-keyword">var</span> eventCollection, keenEvent;</pre></div></div>
             
         </li>
@@ -715,7 +717,7 @@ If it is not valid then we attempt to generate it from the route.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
-              <p>If the whitelist was defined explicitly, then we won&#39;t be trying to create a whitelist in the background.</p>
+              <p>If the whitelist was defined explicitly, then we won’t be trying to create a whitelist in the background.</p>
 
             </div>
             
@@ -758,10 +760,10 @@ and make a request to Keen.IO.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype._trackEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventCollection, keenEvent)</span> {</span>
+            <div class="content"><div class='highlight'><pre>KeenioMiddleware.prototype._trackEvent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventCollection, keenEvent)</span> </span>{
   <span class="hljs-keyword">var</span> keenioMiddlewareScope = <span class="hljs-keyword">this</span>;
   <span class="hljs-keyword">this</span>.emit(<span class="hljs-string">"track"</span>, { eventCollection: eventCollection, keenEvent: keenEvent });
-  <span class="hljs-keyword">this</span>.keenClient.addEvent(eventCollection, keenEvent, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err, res)</span> {</span>
+  <span class="hljs-keyword">this</span>.keenClient.addEvent(eventCollection, keenEvent, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err, res)</span> </span>{
     <span class="hljs-keyword">if</span> (err) {
       <span class="hljs-keyword">return</span> keenioMiddlewareScope.emit(<span class="hljs-string">"error"</span>, err);
     }
@@ -774,7 +776,7 @@ and make a request to Keen.IO.</p>
   });
 };
 
-KeenioMiddleware.prototype._overrideConfig = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route, routeConfig)</span> {</span>
+KeenioMiddleware.prototype._overrideConfig = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route, routeConfig)</span> </span>{
   <span class="hljs-keyword">var</span> config = {};</pre></div></div>
             
         </li>
@@ -807,7 +809,7 @@ KeenioMiddleware.prototype._overrideConfig = <span class="hljs-function"><span c
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
-              <p>If a route has data stored in the &#39;routes&#39; key of the configuration, we fetch this data.</p>
+              <p>If a route has data stored in the ‘routes’ key of the configuration, we fetch this data.</p>
 
             </div>
             
@@ -856,7 +858,7 @@ KeenioMiddleware.prototype._overrideConfig = <span class="hljs-function"><span c
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
-              <p><code>routeConfig.*</code> should override the <code>eventCollectiomMetadata.*</code> which should override the <code>options.*</code> 
+              <p><code>routeConfig.*</code> should override the <code>eventCollectiomMetadata.*</code> which should override the <code>options.*</code>
 and the <code>_whitelistPropertiesConfig</code> which is a fallback set later on if the whitelist was not explicitly defined.
 (This is about whitelists, but <code>eventCollectionName</code> and <code>tag</code> are also overridden in this order.)</p>
 
@@ -885,7 +887,7 @@ and the <code>_whitelistPropertiesConfig</code> which is a fallback set later on
   };
 };
 
-KeenioMiddleware.prototype._configureHandlers = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>
+KeenioMiddleware.prototype._configureHandlers = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> </span>{
   <span class="hljs-keyword">this</span>.routesHandler = <span class="hljs-keyword">new</span> RoutesModule(options, <span class="hljs-keyword">this</span>._ee);
   <span class="hljs-keyword">this</span>.proxyResponseHandler = <span class="hljs-keyword">new</span> ProxyResponseModule(options, <span class="hljs-keyword">this</span>._ee);
   <span class="hljs-keyword">this</span>.requestHandler = <span class="hljs-keyword">new</span> RequestModule(options, <span class="hljs-keyword">this</span>._ee);
@@ -894,7 +896,7 @@ KeenioMiddleware.prototype._configureHandlers = <span class="hljs-function"><spa
   <span class="hljs-keyword">this</span>.keenEventHandler = <span class="hljs-keyword">new</span> KeenEventModule(options, <span class="hljs-keyword">this</span>._ee);
 };
 
-exports = module.exports = <span class="hljs-keyword">new</span> KeenioMiddleware();</pre></div></div>
+exports = <span class="hljs-built_in">module</span>.exports = <span class="hljs-keyword">new</span> KeenioMiddleware();</pre></div></div>
             
         </li>
         

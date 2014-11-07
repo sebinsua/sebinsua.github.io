@@ -107,7 +107,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>exports = module.exports = {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>exports = <span class="hljs-built_in">module</span>.exports = {</pre></div></div>
             
         </li>
         
@@ -133,7 +133,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Defaults for overridding internal middleware behaviour. An oxymoron.</p>
+              <p>Defaults for overridding internal middleware behaviour.</p>
 
             </div>
             
@@ -163,7 +163,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>Defaults for properties that should be <em>SMITED</em> before they are sent to Keen.IO. This is on addition to any properties like &#39;password&#39;.</p>
+              <p>Defaults for properties that should be <em>SMITED</em> before they are sent to Keen.IO. This is on addition to any properties like ‘password’.</p>
 
             </div>
             
@@ -178,6 +178,21 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
+              <p>Events for acceptable statuses recorded only by default.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  httpErrorsRecorded: <span class="hljs-literal">false</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
               <p>Defaults for internal values.</p>
 
             </div>
@@ -190,19 +205,19 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>By default the addons are switched on.</p>
+              <p>By default the addons are switched off.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    addons: {
-      ipToGeo: <span class="hljs-literal">true</span>,
-      userAgentParser: <span class="hljs-literal">true</span>
+      ipToGeo: <span class="hljs-literal">false</span>,
+      userAgentParser: <span class="hljs-literal">false</span>
     },
     eventualSchemas: {
       cache: <span class="hljs-literal">true</span>,

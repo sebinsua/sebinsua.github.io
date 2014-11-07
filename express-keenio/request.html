@@ -110,14 +110,14 @@
 
 <span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../core/helpers'</span>);
 
-<span class="hljs-keyword">var</span> RequestModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> {</span>
+<span class="hljs-keyword">var</span> RequestModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> </span>{
   <span class="hljs-keyword">this</span>._ee = helpers.setDefaultEvents(eventEmitter, []);
-  
+
   <span class="hljs-keyword">var</span> handlers = options.handlers,
       overrideParseRequestBody = !!(handlers &amp;&amp; handlers.parseRequestBody);
 
-  <span class="hljs-keyword">this</span>.parseRequestObject = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req)</span> {</span>
-    <span class="hljs-keyword">var</span> _getParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(weirdParamObject)</span> {</span>
+  <span class="hljs-keyword">this</span>.parseRequestObject = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req)</span> </span>{
+    <span class="hljs-keyword">var</span> _getParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(weirdParamObject)</span> </span>{
       <span class="hljs-keyword">var</span> params = {};
       <span class="hljs-keyword">if</span> (weirdParamObject) {
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> paramName <span class="hljs-keyword">in</span> weirdParamObject) {
@@ -130,7 +130,7 @@
     <span class="hljs-keyword">var</span> parsedRequestData = {
       method: req.method,
       path: req.path,
-      params: _getParams(req.route.params),
+      params: req.params || _getParams(req.route.params),
       body: <span class="hljs-keyword">this</span>.parseRequestBody(req) || {},
       query: req.query,
       referer: req.get(<span class="hljs-string">'Referer'</span>)
@@ -139,11 +139,11 @@
     <span class="hljs-keyword">return</span> parsedRequestData;
   };
 
-  <span class="hljs-keyword">this</span>.parseRequestBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req)</span> {</span>
+  <span class="hljs-keyword">this</span>.parseRequestBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req)</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._parseRequestBody(req.body);
   };
 
-  <span class="hljs-keyword">this</span>._fallbackParseRequestBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(body)</span> {</span>
+  <span class="hljs-keyword">this</span>._fallbackParseRequestBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(body)</span> </span>{
     <span class="hljs-keyword">return</span> body;
   };</pre></div></div>
             
@@ -162,12 +162,12 @@
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>._parseRequestBody = overrideParseRequestBody ? handlers.parseRequestBody
                                                     : <span class="hljs-keyword">this</span>._fallbackParseRequestBody;
-  
+
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
 
 }).bind({});
 
-exports = module.exports = RequestModule;</pre></div></div>
+exports = <span class="hljs-built_in">module</span>.exports = RequestModule;</pre></div></div>
             
         </li>
         

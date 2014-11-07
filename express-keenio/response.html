@@ -110,13 +110,13 @@
 
 <span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../core/helpers'</span>);
 
-<span class="hljs-keyword">var</span> ResponseModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> {</span>
+<span class="hljs-keyword">var</span> ResponseModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> </span>{
   <span class="hljs-keyword">this</span>._ee = helpers.setDefaultEvents(eventEmitter, []);
   
   <span class="hljs-keyword">var</span> handlers = options.handlers,
       overrideParseResponseBody = !!(handlers &amp;&amp; handlers.parseResponseBody);
 
-  <span class="hljs-keyword">this</span>.parseResponseBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span></pre></div></div>
+  <span class="hljs-keyword">this</span>.parseResponseBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -138,7 +138,7 @@
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._parseResponseBody(data);
   };
 
-  <span class="hljs-keyword">this</span>._fallbackParseResponseBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(body)</span> {</span>
+  <span class="hljs-keyword">this</span>._fallbackParseResponseBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(body)</span> </span>{
     <span class="hljs-keyword">return</span> body;
   };</pre></div></div>
             
@@ -162,7 +162,7 @@
 
 }).bind({});
 
-exports = module.exports = ResponseModule;</pre></div></div>
+exports = <span class="hljs-built_in">module</span>.exports = ResponseModule;</pre></div></div>
             
         </li>
         

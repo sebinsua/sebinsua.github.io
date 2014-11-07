@@ -150,11 +150,10 @@
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <ul>
-<li>We can&#39;t sent too many properties to Keen.IO. Dynamic properties should be avoided.</li>
+<li>We can’t sent too many properties to Keen.IO. Dynamic properties should be avoided.</li>
 <li>Definitely cannot send more than 1000 properties - try to keep it around 100 at most.</li>
 <li>Nested properties are what is counted.</li>
 </ul>
-<h2 id="how-do-we-do-this-">How do we do this.</h2>
 
             </div>
             
@@ -167,16 +166,41 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
+              <h2 id="how-do-we-do-this-">How do we do this.</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
               <ul>
 <li>We sanity check and filter before making a request to Keen.IO.</li>
 <li>We allow explicit generation of a whitelist to do the above with.</li>
 <li>We also slowly build a schema which can be converted into a whitelist.</li>
 </ul>
-<p>This stores a list of routes that define eventual schemas and eventually their whitelists.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">RouteSchemas</span><span class="hljs-params">(options)</span> {</span>
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>This stores a list of routes that define eventual schemas and eventually their whitelists.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">RouteSchemas</span><span class="hljs-params">(options)</span> </span>{
   <span class="hljs-keyword">this</span>.options = options || {};
 
   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options &amp;&amp; <span class="hljs-keyword">this</span>.options.handlers &amp;&amp; <span class="hljs-keyword">this</span>.options.handlers.freezeStrategy) {
@@ -204,17 +228,17 @@
         </li>
         
         
-        <li id="section-6">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Each route has three eventual schemas. An add method on the route, affects all three.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>RouteSchemas.prototype.add = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route, event)</span> {</span>
+            <div class="content"><div class='highlight'><pre>RouteSchemas.prototype.add = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route, event)</span> </span>{
   <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._hasRoute(route)) {
     <span class="hljs-keyword">this</span>._initRouteEventualSchemas(route);
   }
@@ -225,13 +249,13 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>Clearly the route will have been setup. This test is just due to mocking _initRouteEventualSchemas in a test...</p>
+              <p>Clearly the route will have been setup. This test is just due to mocking _initRouteEventualSchemas in a test…</p>
 
             </div>
             
@@ -244,11 +268,11 @@
         </li>
         
         
-        <li id="section-8">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Should not add to the frozen EventualSchemas and should make sure that the data exists for the schema.</p>
 
@@ -279,11 +303,11 @@
         </li>
         
         
-        <li id="section-9">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>We can use this even when there is no whitelist or eventual schema existing yet
 as it will return an empty object until a key has a schema/whitelist defined.
@@ -291,7 +315,7 @@ Non-existing keys do not act upon the data we wish to filter.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>RouteSchemas.prototype.getWhitelist = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> {</span>
+            <div class="content"><div class='highlight'><pre>RouteSchemas.prototype.getWhitelist = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> </span>{
   <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._hasRoute(route)) {
     <span class="hljs-keyword">this</span>._initRouteEventualSchemas(route);
   }
@@ -301,11 +325,11 @@ Non-existing keys do not act upon the data we wish to filter.</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>These will be switched to false if they are not the case in the next 10 lines.</p>
 
@@ -316,13 +340,13 @@ Non-existing keys do not act upon the data we wish to filter.</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>This will not return with a key if the eventual schema at that key isn&#39;t frozen yet.</p>
+              <p>This will not return with a key if the eventual schema at that key isn’t frozen yet.</p>
 
             </div>
             
@@ -343,13 +367,13 @@ Non-existing keys do not act upon the data we wish to filter.</p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>If any schema is not frozen, then...</p>
+              <p>If any schema is not frozen, then…</p>
 
             </div>
             
@@ -361,11 +385,11 @@ Non-existing keys do not act upon the data we wish to filter.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>If crystallised, grab it.</p>
 
@@ -387,25 +411,25 @@ Non-existing keys do not act upon the data we wish to filter.</p>
   <span class="hljs-keyword">return</span> whitelist;
 };
 
-RouteSchemas.prototype._generateWhitelist = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventualSchema, schemaKey)</span> {</span>
+RouteSchemas.prototype._generateWhitelist = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventualSchema, schemaKey)</span> </span>{
   <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
   <span class="hljs-keyword">var</span> eventualSchemaOptions = self.options.defaults &amp;&amp; self.options.defaults.eventualSchemas || {};
 
   <span class="hljs-keyword">var</span> flattenedEventualSchema = <span class="hljs-keyword">this</span>._flattenEventualSchema(eventualSchema.get()),
       sortable = [];
-  helpers.forEach(flattenedEventualSchema, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(propertyCount, property)</span> {</span>
+  helpers.forEach(flattenedEventualSchema, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(propertyCount, property)</span> </span>{
     sortable.push({ property: property, propertyCount: propertyCount });
   });
-  sortable.sort(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a, b)</span> {</span> <span class="hljs-keyword">return</span> b.propertyCount &gt; a.propertyCount; })</pre></div></div>
+  sortable.sort(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(a, b)</span> </span>{ <span class="hljs-keyword">return</span> b.propertyCount &gt; a.propertyCount; })</pre></div></div>
             
         </li>
         
         
-        <li id="section-14">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>We only get the first MAX_PROPERTIES for a whitelist - this dictates the size of an event.</p>
 
@@ -421,18 +445,18 @@ RouteSchemas.prototype._generateWhitelist = <span class="hljs-function"><span cl
         </li>
         
         
-        <li id="section-15">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Test to see whether the property + propertyCount pass all of the whitelist filters. <em>all</em> must be true
 for the property to be kept (or there must be zero whitelist checking filters.)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isKeepProperty = self.filterWhitelistStrategy(eventualSchemaOptions[schemaKey] || {}).reduce(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(acc, fn)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isKeepProperty = self.filterWhitelistStrategy(eventualSchemaOptions[schemaKey] || {}).reduce(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(acc, fn)</span> </span>{
         <span class="hljs-keyword">return</span> !!fn &amp;&amp; fn(ctx);
     }, <span class="hljs-literal">true</span>);
     <span class="hljs-keyword">if</span> (isKeepProperty) {
@@ -443,18 +467,18 @@ for the property to be kept (or there must be zero whitelist checking filters.)<
   <span class="hljs-keyword">return</span> individualWhitelist;
 };
 
-RouteSchemas.prototype._generateRouteIdentifier = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> {</span>
+RouteSchemas.prototype._generateRouteIdentifier = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> </span>{
   <span class="hljs-keyword">var</span> routeMethod = route.method || <span class="hljs-string">'get'</span>, routePath = route.path || <span class="hljs-string">'/'</span>,
       routeIdentifier = routeMethod + <span class="hljs-string">' '</span> + routePath;
   <span class="hljs-keyword">return</span> routeIdentifier;
 };
 
-RouteSchemas.prototype._hasRoute = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> {</span>
+RouteSchemas.prototype._hasRoute = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> </span>{
   <span class="hljs-keyword">var</span> routeIdentifier = <span class="hljs-keyword">this</span>._generateRouteIdentifier(route);
   <span class="hljs-keyword">return</span> !!<span class="hljs-keyword">this</span>.routes[routeIdentifier];
 };
 
-RouteSchemas.prototype._initRouteEventualSchemas = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> {</span>
+RouteSchemas.prototype._initRouteEventualSchemas = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route)</span> </span>{
   <span class="hljs-keyword">var</span> routeIdentifier = <span class="hljs-keyword">this</span>._generateRouteIdentifier(route);
 
   <span class="hljs-keyword">var</span> eventualSchemaOptions = <span class="hljs-keyword">this</span>.options.defaults &amp;&amp; <span class="hljs-keyword">this</span>.options.defaults.eventualSchemas || {};
@@ -468,11 +492,11 @@ RouteSchemas.prototype._initRouteEventualSchemas = <span class="hljs-function"><
         </li>
         
         
-        <li id="section-16">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Flattens an object.</p>
 <p>Given three of these:</p>
@@ -507,16 +531,16 @@ RouteSchemas.prototype._initRouteEventualSchemas = <span class="hljs-function"><
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>RouteSchemas.prototype._flattenEventualSchema = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(target, propertyDelimiter, arrayIdentifier)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>RouteSchemas.prototype._flattenEventualSchema = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(target, propertyDelimiter, arrayIdentifier)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Nested with . and []</p>
 
@@ -527,12 +551,12 @@ RouteSchemas.prototype._initRouteEventualSchemas = <span class="hljs-function"><
 
   <span class="hljs-keyword">var</span> output = {};
 
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getkey</span><span class="hljs-params">(key, prev)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getkey</span><span class="hljs-params">(key, prev)</span> </span>{
     <span class="hljs-keyword">return</span> prev ? prev + propertyDelimiter + key : key
   }
 
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">step</span><span class="hljs-params">(object, prev)</span> {</span>
-    <span class="hljs-built_in">Object</span>.keys(object).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> {</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">step</span><span class="hljs-params">(object, prev)</span> </span>{
+    <span class="hljs-built_in">Object</span>.keys(object).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> </span>{
       <span class="hljs-keyword">var</span> itIsArray = helpers.isArray(object[key])
         , itIsObject = helpers.isObject(object[key])
 
@@ -547,13 +571,13 @@ RouteSchemas.prototype._initRouteEventualSchemas = <span class="hljs-function"><
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
-              <p>We know everything which is empty still has a _propertyCount, so...</p>
+              <p>We know everything which is empty still has a _propertyCount, so…</p>
 
             </div>
             
@@ -571,28 +595,28 @@ RouteSchemas.prototype._initRouteEventualSchemas = <span class="hljs-function"><
         </li>
         
         
-        <li id="section-19">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>If <em>any</em> of these rules is true, then it shall freeze.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>RouteSchemas.prototype._getDefaultFreezeStrategy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventualSchemaOptions)</span> {</span>
+            <div class="content"><div class='highlight'><pre>RouteSchemas.prototype._getDefaultFreezeStrategy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventualSchemaOptions)</span> </span>{
 
-  <span class="hljs-keyword">var</span> hasMaximumProperties = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ctx)</span> {</span></pre></div></div>
+  <span class="hljs-keyword">var</span> hasMaximumProperties = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ctx)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Past maximum number of properties sent to _collatedInstances.</p>
 
@@ -603,16 +627,16 @@ RouteSchemas.prototype._initRouteEventualSchemas = <span class="hljs-function"><
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._propertyCount &gt;= MAX_PROPERTIES;
   };
 
-  <span class="hljs-keyword">var</span> hasMaxInstances = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ctx)</span> {</span></pre></div></div>
+  <span class="hljs-keyword">var</span> hasMaxInstances = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ctx)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-21">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Past maximum number of instances sent to _collatedInstances.</p>
 
@@ -623,16 +647,16 @@ RouteSchemas.prototype._initRouteEventualSchemas = <span class="hljs-function"><
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._instanceCount &gt;= NUMBER_OF_INSTANCES; 
   };
 
-  <span class="hljs-keyword">var</span> isBeyondExpiryDate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ctx)</span> {</span></pre></div></div>
+  <span class="hljs-keyword">var</span> isBeyondExpiryDate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ctx)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-22">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Beyond a certain number of days.</p>
 
@@ -654,28 +678,28 @@ RouteSchemas.prototype._initRouteEventualSchemas = <span class="hljs-function"><
         </li>
         
         
-        <li id="section-23">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Current defaults is to allow all properties that are produced by a frozen eventual schema.
 Current application of these means that all must be true for a property to be kept.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>RouteSchemas.prototype._getDefaultFilterWhitelistStrategy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventualSchemaOptions)</span> {</span>
+            <div class="content"><div class='highlight'><pre>RouteSchemas.prototype._getDefaultFilterWhitelistStrategy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(eventualSchemaOptions)</span> </span>{
   <span class="hljs-keyword">var</span> getWhitelistStrategy = [];
   <span class="hljs-keyword">return</span> getWhitelistStrategy;
 };
 
-RouteSchemas.prototype.save = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route, whitelist)</span> {</span>
+RouteSchemas.prototype.save = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(route, whitelist)</span> </span>{
   <span class="hljs-keyword">var</span> routeIdentifier = <span class="hljs-keyword">this</span>._generateRouteIdentifier(route),
       cachePath = path.resolve(<span class="hljs-keyword">this</span>.cachePath);
 
   <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
-  fs.readFile(cachePath, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err, originalData)</span> {</span>
+  fs.readFile(cachePath, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err, originalData)</span> </span>{
     <span class="hljs-keyword">var</span> whitelists = {};
     <span class="hljs-keyword">if</span> (!err) {
       <span class="hljs-keyword">try</span> {
@@ -683,17 +707,17 @@ RouteSchemas.prototype.save = <span class="hljs-function"><span class="hljs-keyw
       } <span class="hljs-keyword">catch</span> (err) { <span class="hljs-comment">/* somebody is trying to screw with us */</span> }
     }
     whitelists[routeIdentifier] = whitelist;
-    fs.writeFile(cachePath, <span class="hljs-built_in">JSON</span>.stringify(whitelists), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err)</span> {</span>
+    fs.writeFile(cachePath, <span class="hljs-built_in">JSON</span>.stringify(whitelists), <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err)</span> </span>{
       <span class="hljs-keyword">if</span> (err) {</pre></div></div>
             
         </li>
         
         
-        <li id="section-24">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>If you cannot write to it, please do not try again.</p>
 
@@ -706,7 +730,7 @@ RouteSchemas.prototype.save = <span class="hljs-function"><span class="hljs-keyw
 
 };
 
-RouteSchemas.prototype.load = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+RouteSchemas.prototype.load = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
   <span class="hljs-keyword">var</span> cachePath = path.resolve(<span class="hljs-keyword">this</span>.cachePath);
 
   <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
@@ -715,7 +739,7 @@ RouteSchemas.prototype.load = <span class="hljs-function"><span class="hljs-keyw
   <span class="hljs-keyword">if</span> (fs.existsSync(cachePath)) {
     <span class="hljs-keyword">try</span> {
       whitelists = <span class="hljs-built_in">JSON</span>.parse(fs.readFileSync(cachePath));
-      helpers.forEach(whitelists, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(whitelist, routeIdentifier)</span> {</span>
+      helpers.forEach(whitelists, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(whitelist, routeIdentifier)</span> </span>{
         self.routes[routeIdentifier] = {};
         self.routes[routeIdentifier].crystallised = whitelist;
       });
@@ -724,13 +748,13 @@ RouteSchemas.prototype.load = <span class="hljs-function"><span class="hljs-keyw
         </li>
         
         
-        <li id="section-25">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
-              <p>If you can&#39;t read it, do <em>NOT</em> try to write to it. Ugh.</p>
+              <p>If you can’t read it, do <em>NOT</em> try to write to it. Ugh.</p>
 
             </div>
             
@@ -741,7 +765,7 @@ RouteSchemas.prototype.load = <span class="hljs-function"><span class="hljs-keyw
   <span class="hljs-keyword">return</span> whitelists;
 };
 
-exports = module.exports = RouteSchemas;</pre></div></div>
+exports = <span class="hljs-built_in">module</span>.exports = RouteSchemas;</pre></div></div>
             
         </li>
         

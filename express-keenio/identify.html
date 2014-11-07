@@ -110,17 +110,17 @@
 
 <span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../core/helpers'</span>);
 
-<span class="hljs-keyword">var</span> IdentifyModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> {</span>
+<span class="hljs-keyword">var</span> IdentifyModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> </span>{
   <span class="hljs-keyword">this</span>._ee = helpers.setDefaultEvents(eventEmitter, []);
 
   <span class="hljs-keyword">var</span> handlers = options.handlers,
       overrideIdentify = !!(handlers &amp;&amp; handlers.generateIdentity);
 
-  <span class="hljs-keyword">this</span>.identify = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req)</span> {</span>
+  <span class="hljs-keyword">this</span>.identify = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req)</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._identify(req);
   };
 
-  <span class="hljs-keyword">this</span>._fallbackIdentify = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req)</span> {</span>
+  <span class="hljs-keyword">this</span>._fallbackIdentify = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req)</span> </span>{
     <span class="hljs-keyword">var</span> identity = {};
     <span class="hljs-keyword">if</span> (req.session) {
       identity.session = helpers.extend({}, req.session);
@@ -144,7 +144,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>X-Forwarded-For will only be used if app.enable(&#39;trust proxy&#39;) was used earlier.</p>
+              <p>X-Forwarded-For will only be used if app.enable(‘trust proxy’) was used earlier.</p>
 
             </div>
             
@@ -174,7 +174,7 @@
 
 }).bind({});
 
-exports = module.exports = IdentifyModule;</pre></div></div>
+exports = <span class="hljs-built_in">module</span>.exports = IdentifyModule;</pre></div></div>
             
         </li>
         

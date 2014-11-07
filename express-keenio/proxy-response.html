@@ -112,7 +112,7 @@
 
 <span class="hljs-keyword">var</span> ResponseModule = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./response'</span>);
 
-<span class="hljs-keyword">var</span> ProxyResponseModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> {</span>
+<span class="hljs-keyword">var</span> ProxyResponseModule = (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, eventEmitter)</span> </span>{
   <span class="hljs-keyword">this</span>._ee = helpers.setDefaultEvents(eventEmitter, []);
     
   <span class="hljs-keyword">var</span> responseHandler = <span class="hljs-keyword">new</span> ResponseModule(options);</pre></div></div>
@@ -130,7 +130,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> _getBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(temp)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> _getBody = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(temp)</span> </span>{
     <span class="hljs-keyword">var</span> body;
     <span class="hljs-keyword">if</span> (helpers.isObject(temp)) {</pre></div></div>
             
@@ -160,7 +160,7 @@
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>If a string was passed in, we check to see whether it was json
-by parsing it and get this data out if possible. Otherwise it&#39;s a string.</p>
+by parsing it and get this data out if possible. Otherwise it’s a string.</p>
 
             </div>
             
@@ -195,7 +195,7 @@ by parsing it and get this data out if possible. Otherwise it&#39;s a string.</p
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> _captureResponseData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(argumentsObj, resStatus)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> _captureResponseData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(argumentsObj, resStatus)</span> </span>{
     <span class="hljs-keyword">var</span> body, statusCode = resStatus || <span class="hljs-number">200</span>,
         data = {};
 
@@ -242,7 +242,7 @@ by parsing it and get this data out if possible. Otherwise it&#39;s a string.</p
     <span class="hljs-keyword">return</span> data;
   };
 
-  <span class="hljs-keyword">var</span> _captureRenderData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(argumentsObj)</span> {</span>
+  <span class="hljs-keyword">var</span> _captureRenderData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(argumentsObj)</span> </span>{
     <span class="hljs-keyword">var</span> body, data = {};
     <span class="hljs-keyword">if</span> (argumentsObj.length &gt;= <span class="hljs-number">2</span> &amp;&amp; helpers.isObject(argumentsObj[<span class="hljs-number">1</span>])) {
       data.body = helpers.extend({}, argumentsObj[<span class="hljs-number">1</span>]); <span class="hljs-comment">// We need a new object, otherwise we get a reference which later has _locals added to it...</span>
@@ -256,7 +256,7 @@ by parsing it and get this data out if possible. Otherwise it&#39;s a string.</p
   <span class="hljs-keyword">this</span>.getResponseData = _captureResponseData;
   <span class="hljs-keyword">this</span>.getRenderData = _captureRenderData;
 
-  <span class="hljs-keyword">this</span>.proxyResponseObject = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(res)</span> {</span>
+  <span class="hljs-keyword">this</span>.proxyResponseObject = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(res)</span> </span>{
     
     <span class="hljs-keyword">var</span> responseJsonSend  = res.json,
         responseJsonpSend = res.jsonp,
@@ -282,7 +282,7 @@ res.json or res.jsonp which call res.send themselves.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> hasNotBeenProxiedAlready = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(parsedResponseData)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> hasNotBeenProxiedAlready = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(parsedResponseData)</span> </span>{
       <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(parsedResponseData).length === <span class="hljs-number">0</span>;
     };</pre></div></div>
             
@@ -306,7 +306,7 @@ arguments:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.json = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    res.json = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> </span>{
       <span class="hljs-keyword">var</span> responseData = _captureResponseData(<span class="hljs-built_in">arguments</span>, res.statusCode || <span class="hljs-number">200</span>);
       parsedResponseData.body = responseHandler.parseResponseBody(responseData.body);
       parsedResponseData.status = responseData.status;
@@ -334,7 +334,7 @@ arguments:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.jsonp = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    res.jsonp = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> </span>{
       <span class="hljs-keyword">var</span> responseData = _captureResponseData(<span class="hljs-built_in">arguments</span>, res.statusCode || <span class="hljs-number">200</span>);
       parsedResponseData.body = responseHandler.parseResponseBody(responseData.body);
       parsedResponseData.status = responseData.status;
@@ -362,7 +362,7 @@ arguments:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.send = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    res.send = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -374,7 +374,7 @@ arguments:</p>
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>If .json or .jsonp call this with a string, an implementation-level detail which 
-is currently correct then we won&#39;t reparse the response again due to the next line.</p>
+is currently correct then we won’t reparse the response again due to the next line.</p>
 
             </div>
             
@@ -402,7 +402,7 @@ is currently correct then we won&#39;t reparse the response again due to the nex
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.redirect = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    res.redirect = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> </span>{
       <span class="hljs-keyword">var</span> responseData = _captureResponseData(<span class="hljs-built_in">arguments</span>, res.statusCode || <span class="hljs-number">200</span>);
       parsedResponseData.body = {
         redirectTo: responseHandler.parseResponseBody(responseData.body)
@@ -427,7 +427,7 @@ is currently correct then we won&#39;t reparse the response again due to the nex
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.render = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    res.render = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> </span>{
       <span class="hljs-keyword">var</span> responseData = _captureRenderData(<span class="hljs-built_in">arguments</span>);
       parsedResponseData.body = responseData.body;
       parsedResponseData.status = res.statusCode;
@@ -451,7 +451,7 @@ is currently correct then we won&#39;t reparse the response again due to the nex
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.sendfile = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    res.sendfile = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -462,7 +462,7 @@ is currently correct then we won&#39;t reparse the response again due to the nex
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>I don&#39;t need to know about the options or the fn. They&#39;re beyond the point.</p>
+              <p>I don’t need to know about the options or the fn. They’re beyond the point.</p>
 
             </div>
             
@@ -490,7 +490,7 @@ is currently correct then we won&#39;t reparse the response again due to the nex
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    res.download = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    res.download = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> </span>{
       parsedResponseData.body = {
         filePath: <span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>]
       };
@@ -509,7 +509,7 @@ is currently correct then we won&#39;t reparse the response again due to the nex
 
 }).bind({});
 
-exports = module.exports = ProxyResponseModule;</pre></div></div>
+exports = <span class="hljs-built_in">module</span>.exports = ProxyResponseModule;</pre></div></div>
             
         </li>
         

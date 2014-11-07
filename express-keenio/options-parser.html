@@ -111,11 +111,11 @@
 <span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./helpers'</span>),
     defaultOptions = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../default-options'</span>);
 
-<span class="hljs-keyword">var</span> OptionsParser = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span class="hljs-keyword">var</span> OptionsParser = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
   <span class="hljs-keyword">this</span>._defaultOptions = defaultOptions || {};
 };
 
-OptionsParser.prototype._validate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>
+OptionsParser.prototype._validate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> </span>{
   <span class="hljs-keyword">if</span> (!options) {
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"No options specified for the keen.io middleware."</span>);
   }
@@ -129,7 +129,7 @@ OptionsParser.prototype._validate = <span class="hljs-function"><span class="hlj
   }
 
   <span class="hljs-keyword">var</span> mandatoryOptions = [<span class="hljs-string">'projectId'</span>, <span class="hljs-string">'writeKey'</span>];
-  mandatoryOptions.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(option)</span> {</span>
+  mandatoryOptions.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(option)</span> </span>{
     <span class="hljs-keyword">var</span> hasMandatoryOption = !! options.client[option];
     <span class="hljs-keyword">if</span> (!hasMandatoryOption) {
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(option + <span class="hljs-string">" is missing from the client options passed into the keen.io middleware and was mandatory."</span>);
@@ -157,12 +157,12 @@ OptionsParser.prototype._validate = <span class="hljs-function"><span class="hlj
   }
 };
 
-OptionsParser.prototype.parse = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>
+OptionsParser.prototype.parse = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> </span>{
   <span class="hljs-keyword">this</span>._validate(options);
   <span class="hljs-keyword">return</span> helpers.extend({}, <span class="hljs-keyword">this</span>._defaultOptions, options);
 };
 
-exports = module.exports = <span class="hljs-keyword">new</span> OptionsParser();</pre></div></div>
+exports = <span class="hljs-built_in">module</span>.exports = <span class="hljs-keyword">new</span> OptionsParser();</pre></div></div>
             
         </li>
         
